@@ -6,5 +6,189 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-
+    <changeSet id="create-initial-structure" author="Petya Ateva">
+        <createTable tableName="teachers">
+            <column name="teacher_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="job_title" type="varchar(50)"/>
+        </createTable>
+        <createTable tableName="students">
+            <column name="student_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="thesis_applications">
+            <column name="application_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="purpose" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tasks" type="varchar(1020)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="technology_stack" type="varchar(510)"/>
+            <column name="teacher_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="thesis_applications"
+                                 baseColumnNames="teacher_id"
+                                 constraintName="FK_thesis_app_teacher"
+                                 referencedTableName="teachers"
+                                 referencedColumnNames="teacher_id"/>
+        <addForeignKeyConstraint baseTableName="thesis_applications"
+                                 baseColumnNames="student_id"
+                                 constraintName="FK_thesis_app_student"
+                                 referencedTableName="students"
+                                 referencedColumnNames="student_id"/>
+        <createTable tableName="departments">
+            <column name="department_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="thesis_applications"
+                                 baseColumnNames="department_id"
+                                 constraintName="FK_thesis_applications_departments"
+                                 referencedTableName="departments"
+                                 referencedColumnNames="department_id"/>
+        <createTable tableName="thesis">
+            <column name="thesis_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="thesis_application_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="datetime"/>
+            <column name="thesis_status" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="grade" type="integer"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="thesis"
+                                 baseColumnNames="thesis_application_id"
+                                 constraintName="FK_thesis_application"
+                                 referencedTableName="thesis_applications"
+                                 referencedColumnNames="application_id"/>
+        <createTable tableName="thesis_review">
+            <column name="review_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="thesis_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="teacher_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="datetime"/>
+            <column name="review" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="conclusion" type="boolean"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="thesis_review"
+                                 baseColumnNames="thesis_id"
+                                 constraintName="FK_thesis_review_thesis"
+                                 referencedTableName="thesis"
+                                 referencedColumnNames="thesis_id"/>
+        <addForeignKeyConstraint baseTableName="thesis_review"
+                                 baseColumnNames="teacher_id"
+                                 constraintName="FK_thesis_review_teacher"
+                                 referencedTableName="teachers"
+                                 referencedColumnNames="teacher_id"/>
+        <createTable tableName="thesis_defenses">
+            <column name="defense_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="datetime" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="thesis_defense_teacher">
+            <column name="defense_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="datetime" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="teacher_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="thesis_defense_teacher"
+                                 baseColumnNames="defense_id"
+                                 constraintName="FK_thesis_defense_teacher_defense_id"
+                                 referencedTableName="thesis_defenses"
+                                 referencedColumnNames="defense_id"/>
+        <addForeignKeyConstraint baseTableName="thesis_defense_teacher"
+                                 baseColumnNames="teacher_id"
+                                 constraintName="FK_thesis_defense_teacher_teacher_id"
+                                 referencedTableName="teachers"
+                                 referencedColumnNames="teacher_id"/>
+        <addPrimaryKey tableName="thesis_defense_teacher" columnNames="defense_id, teacher_id"/>
+        <addUniqueConstraint tableName="thesis_defense_teacher" columnNames="datetime, teacher_id"/>
+        <createTable tableName="thesis_defense_student">
+            <column name="defense_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="thesis_defense_student"
+                                 baseColumnNames="defense_id"
+                                 constraintName="FK_thesis_defense_student_defense_id"
+                                 referencedTableName="thesis_defenses"
+                                 referencedColumnNames="defense_id"/>
+        <addForeignKeyConstraint baseTableName="thesis_defense_student"
+                                 baseColumnNames="student_id"
+                                 constraintName="FK_thesis_defense_student_student_id"
+                                 referencedTableName="students"
+                                 referencedColumnNames="student_id"/>
+        <addPrimaryKey tableName="thesis_defense_student" columnNames="defense_id, student_id"/>
+    </changeSet>
 </databaseChangeLog>
