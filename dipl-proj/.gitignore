@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-**/*/db/changelog-local.xml
+**/*/application-local.properties
