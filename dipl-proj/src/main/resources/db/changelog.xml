@@ -191,4 +191,13 @@
                                  referencedColumnNames="student_id"/>
         <addPrimaryKey tableName="thesis_defense_student" columnNames="defense_id, student_id"/>
     </changeSet>
+    <changeSet id="adjust-db-1" author="Petya Ateva">
+        <modifyDataType tableName="teachers" columnName="job_title" newDataType="bigint"/>
+        <addColumn tableName="students">
+            <column name="fac_number" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <modifyDataType tableName="thesis" columnName="thesis_status" newDataType="bigint"/>
+    </changeSet>
 </databaseChangeLog>
