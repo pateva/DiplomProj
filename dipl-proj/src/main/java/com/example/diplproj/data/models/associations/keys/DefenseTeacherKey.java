@@ -1,4 +1,4 @@
-package com.example.diplproj.models.associations.keys;
+package com.example.diplproj.data.models.associations.keys;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

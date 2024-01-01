@@ -14,6 +14,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EnumValueNotAllowedException.class)
     public ResponseEntity<Object> handleEnumValueNotAllowedException(EnumValueNotAllowedException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(EntityDoesNotExistException.class)
+    public ResponseEntity<Object> hanldeEntityDoesNotExistException(EntityDoesNotExistException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
 
     }
 }

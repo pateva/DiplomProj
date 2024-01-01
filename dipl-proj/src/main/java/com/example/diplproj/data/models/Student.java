@@ -1,8 +1,6 @@
-package com.example.diplproj.models;
+package com.example.diplproj.data.models;
 
-import com.example.diplproj.utils.converters.JobTitleConverter;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -12,25 +10,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 @Entity
-@Table(name = "teachers")
-@Builder
+@Table(name = "students")
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Teacher extends User {
-    @Column(name = "job_title")
-    @Convert(converter = JobTitleConverter.class)
-    private Long jobTitle;
+@SuperBuilder
+public class Student extends User {
+    @Column(name = "fac_number")
+    private String facNumber;
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "student")
     private Set<ThesisApplication> thesisApplications;
-
-    @OneToMany(mappedBy = "teacher")
-    private Set<ThesisReview> thesisReviews;
 }

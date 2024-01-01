@@ -204,4 +204,16 @@
         <renameColumn tableName="teachers" oldColumnName="teacher_id" newColumnName="user_id"/>
         <renameColumn tableName="students" oldColumnName="student_id" newColumnName="user_id"/>
     </changeSet>
+    <changeSet id="adjust-db-4" author="PA">
+        <addColumn tableName="students">
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="teachers">
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

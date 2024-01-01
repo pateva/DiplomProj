@@ -1,4 +1,4 @@
-package com.example.diplproj.models;
+package com.example.diplproj.data.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @NoArgsConstructor
@@ -18,8 +19,8 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-@Builder
-public abstract class User {
+@SuperBuilder
+public class User {
     @Column(name = "user_id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,4 +31,7 @@ public abstract class User {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "email")
+    private String email;
 }

@@ -1,7 +1,7 @@
-package com.example.diplproj.models;
+package com.example.diplproj.data.models;
 
-import com.example.diplproj.models.associations.ThesisDefenseStudent;
-import com.example.diplproj.models.associations.ThesisDefenseTeacher;
+import com.example.diplproj.data.models.associations.ThesisDefenseStudent;
+import com.example.diplproj.data.models.associations.ThesisDefenseTeacher;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

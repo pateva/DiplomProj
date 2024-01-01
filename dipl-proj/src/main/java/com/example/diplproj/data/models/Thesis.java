@@ -1,4 +1,4 @@
-package com.example.diplproj.models;
+package com.example.diplproj.data.models;
 
 import com.example.diplproj.utils.converters.ThesisStatusConverter;
 import com.example.diplproj.utils.enums.ThesisStatus;

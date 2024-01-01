@@ -1,4 +1,4 @@
-package com.example.diplproj.models;
+package com.example.diplproj.data.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,38 +20,51 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "thesis_review")
+@Table(name = "thesis_applications")
 @Builder
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class ThesisReview {
+public class ThesisApplication {
     @Id
-    @Column(name = "review_id")
+    @Column(name = "application_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long reviewId;
+    private Long applicationId;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "purpose")
+    private String purpose;
+
+    @Column(name = "tasks")
+    private String tasks;
+
+    @Column(name = "technology_stack")
+    private String techStack;
+
+    @Column(name = "status")
+    private boolean status;
+
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "thesis_id", nullable = false)
-    private Thesis thesis;
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
-
-    @Column(name = "createdAt")
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @Column(name = "updatedAt")
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
-    @Column(name = "review")
-    private String review;
-
-    @Column(name = "conclusion")
-    private boolean conclusion;
 }
