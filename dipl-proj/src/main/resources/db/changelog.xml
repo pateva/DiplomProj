@@ -200,4 +200,8 @@
         </addColumn>
         <modifyDataType tableName="thesis" columnName="thesis_status" newDataType="bigint"/>
     </changeSet>
+    <changeSet id="adjust-db-3" author="Petya Ateva">
+        <renameColumn tableName="teachers" oldColumnName="teacher_id" newColumnName="user_id"/>
+        <renameColumn tableName="students" oldColumnName="student_id" newColumnName="user_id"/>
+    </changeSet>
 </databaseChangeLog>
