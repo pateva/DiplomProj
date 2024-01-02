@@ -2,6 +2,7 @@ package com.example.diplproj.controllers;
 
 import com.example.diplproj.data.dtos.StudentDto;
 import com.example.diplproj.services.contracts.StudentService;
+import com.example.diplproj.utils.annotations.HasRoles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,7 @@ public class StudentsController {
 
     }
 
+    @HasRoles("student")
     @GetMapping("/{id}")
     public ResponseEntity<StudentDto> getStudent(@PathVariable final String id,
                                                  @AuthenticationPrincipal Jwt jwt) {
