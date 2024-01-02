@@ -22,5 +22,6 @@ import java.util.Set;
 public class StudentDto extends UserDto{
     @JsonProperty("fac_number")
     private String facNumber;
+    @JsonProperty("thesis_applications")
     private Set<ThesisApplicationDto> thesisApplicationDtos;
 }

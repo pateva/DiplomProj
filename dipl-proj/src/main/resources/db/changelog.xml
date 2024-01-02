@@ -215,5 +215,6 @@
                 <constraints nullable="false" unique="true"/>
             </column>
         </addColumn>
+        <addUniqueConstraint tableName="students" columnNames="fac_number"/>
     </changeSet>
 </databaseChangeLog>
