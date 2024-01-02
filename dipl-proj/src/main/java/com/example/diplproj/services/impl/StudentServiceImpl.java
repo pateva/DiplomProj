@@ -41,13 +41,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto getStudentById(Long id) {
-        Optional<Student> studentOpt = studentRepository.findById(id);
 
-        if(!studentOpt.isPresent()) {
-            throw new EntityDoesNotExistException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Student", "id"));
-        }
-
-        return studentMapper.studentToDto(studentOpt.get());
+        return studentMapper.studentToDto(getStudent(id));
     }
 
     @Override
@@ -59,18 +54,28 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudent(Long id, StudentDto studentDto) {
-        Optional<Student> studentOpt = studentRepository.findById(id);
-
-        if (!studentOpt.isPresent()) {
-            throw new EntityDoesNotExistException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Student", "this id"));
-        }
-
-        Student student = studentOpt.get();
+        Student student = getStudent(id);
 
         student.setFacNumber(studentDto.getFirstName())
                 .setLastName(studentDto.getLastName())
                 .setEmail(studentDto.getEmail());
 
         studentRepository.save(student);
+    }
+
+    @Override
+    public void deleteStudent(Long id) {
+        Student student = getStudent(id);
+        studentRepository.delete(student);
+    }
+
+    private Student getStudent(Long id) {
+        Optional<Student> studentOpt = studentRepository.findById(id);
+
+        if (studentOpt.isEmpty()) {
+            throw new EntityDoesNotExistException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Student", "this id"));
+        }
+
+        return studentOpt.get();
     }
 }

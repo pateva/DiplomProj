@@ -1,7 +1,6 @@
 package com.example.diplproj.exceptions;
 
 
-import com.example.diplproj.exceptions.EnumValueNotAllowedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,9 +16,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(EntityDoesNotExistException.class)
-    public ResponseEntity<Object> hanldeEntityDoesNotExistException(EntityDoesNotExistException ex) {
+    public ResponseEntity<Object> handleEntityDoesNotExistException(EntityDoesNotExistException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(UniqueConstraintException.class)
+    public ResponseEntity<Object> handleUniqueConstraintException(UniqueConstraintException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
     }
 }
 
