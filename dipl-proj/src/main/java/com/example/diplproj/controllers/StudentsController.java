@@ -33,7 +33,9 @@ public class StudentsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDto> getStudent(@PathVariable final String id) {
+    public ResponseEntity<StudentDto> getStudent(@PathVariable final String id,
+                                                 @AuthenticationPrincipal User user) {
+        System.err.println(user);
         return new ResponseEntity<>(studentService.getStudentById(Long.parseLong(id)), HttpStatus.OK);
     }
 

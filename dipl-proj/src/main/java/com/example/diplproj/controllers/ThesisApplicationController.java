@@ -34,6 +34,7 @@ public class ThesisApplicationController {
 
     @GetMapping("/login/oauth2/code/okta")
     public Boolean oktaLogin(@AuthenticationPrincipal OidcUser principal) {
+
         return true;
     }
 
