@@ -5,13 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
-import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
-import org.springframework.security.oauth2.jwt.JwtException;
-import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -41,13 +36,6 @@ public class SecurityConfig {
     @Bean
     public JwtDecoder jwtDecoder() {
 
-        JwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(jwkSet).build();
-
-        return token -> {
-            System.out.println("token: " + token);
-            Jwt jwt = jwtDecoder.decode(token);
-            System.out.println("jwt: " + jwt.getClaims());
-            return jwt;
-        };
+        return NimbusJwtDecoder.withJwkSetUri(jwkSet).build();
     }
 }
