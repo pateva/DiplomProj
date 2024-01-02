@@ -42,6 +42,6 @@ public class StudentsController {
     public ResponseEntity<StudentDto> updateStudent(@PathVariable final String id, @RequestBody final StudentDto studentDto) {
         studentService.updateStudent(Long.parseLong(id), studentDto);
 
-        return new ResponseEntity<>(studentService.getStudentById(studentDto.getUserId()), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getStudentById(Long.parseLong(id)), HttpStatus.OK);
     }
 }
