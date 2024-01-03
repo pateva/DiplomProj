@@ -40,20 +40,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDto getStudentByEmail(String email) {
+    public StudentDto getStudentDtoByEmail(String email) {
+
+        return studentMapper.studentToDto(getStudentByEmail(email));
+    }
+
+    @Override
+    public Student getStudentByEmail(String email) {
         Optional<Student> studentOpt = studentRepository.findByEmail(email);
 
         if (studentOpt.isEmpty()) {
             throw new EntityDoesNotExistException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Student", "email address"));
         }
 
-        return studentMapper.studentToDto(studentOpt.get());
+        return studentOpt.get();
     }
 
     @Override
-    public StudentDto getStudentById(Long id) {
+    public StudentDto getStudentDtoById(Long id) {
 
-        return studentMapper.studentToDto(getStudent(id));
+        return studentMapper.studentToDto(getStudentById(id));
     }
 
     @Override
@@ -65,7 +71,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudent(Long id, StudentDto studentDto) {
-        Student student = getStudent(id);
+        Student student = getStudentById(id);
 
         student.setFirstName(studentDto.getFirstName())
                 .setLastName(studentDto.getLastName());
@@ -84,13 +90,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(Long id) {
-        Student student = getStudent(id);
+        Student student = getStudentById(id);
 
         auth0Service.deleteUser(student.getEmail());
         studentRepository.delete(student);
     }
 
-    private Student getStudent(Long id) {
+    @Override
+    public Student getStudentById(Long id) {
         Optional<Student> studentOpt = studentRepository.findById(id);
 
         if (studentOpt.isEmpty()) {

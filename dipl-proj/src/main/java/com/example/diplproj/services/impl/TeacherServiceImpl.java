@@ -44,14 +44,20 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherDto getByEmail(String email) {
+    public TeacherDto getTeacherDtoByEmail(String email) {
+
+        return teacherMapper.toTeacherDto(getTeacherByEmail(email));
+    }
+
+    @Override
+    public Teacher getTeacherByEmail(String email) {
         Optional<Teacher> teacherOpt = teacherRepository.findByEmail(email);
 
         if (teacherOpt.isEmpty()) {
             throw new EntityDoesNotExistException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Teacher", "email address"));
         }
 
-        return teacherMapper.toTeacherDto(teacherOpt.get());
+        return teacherOpt.get();
     }
 
     @Override

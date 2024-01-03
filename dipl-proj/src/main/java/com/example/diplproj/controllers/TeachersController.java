@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +44,7 @@ public class TeachersController {
     public ResponseEntity<TeacherDto> createTeacher(@RequestBody final TeacherDto teacherDto) {
         teacherService.createTeacher(teacherDto);
 
-        return new ResponseEntity<>(teacherService.getByEmail(teacherDto.getEmail()), HttpStatus.OK);
+        return new ResponseEntity<>(teacherService.getTeacherDtoByEmail(teacherDto.getEmail()), HttpStatus.OK);
     }
 
     @HasRoles(Roles.TEACHER)

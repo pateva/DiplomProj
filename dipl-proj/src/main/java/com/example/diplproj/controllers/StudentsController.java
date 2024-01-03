@@ -46,7 +46,7 @@ public class StudentsController {
             Map<String, Object> claims = jwt.getClaims();
             System.err.println("Claims: " + claims);
         }
-        return new ResponseEntity<>(studentService.getStudentById(Long.parseLong(id)), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getStudentDtoById(Long.parseLong(id)), HttpStatus.OK);
     }
 
     @HasRoles(Roles.TEACHER)
@@ -54,7 +54,7 @@ public class StudentsController {
     public ResponseEntity<StudentDto> createStudent(@RequestBody final StudentDto studentDto) {
         studentService.createStudent(studentDto);
 
-        return new ResponseEntity<>(studentService.getStudentByEmail(studentDto.getEmail()), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getStudentDtoByEmail(studentDto.getEmail()), HttpStatus.OK);
     }
 
     @HasRoles(Roles.TEACHER)
@@ -62,7 +62,7 @@ public class StudentsController {
     public ResponseEntity<StudentDto> updateStudent(@PathVariable final String id, @RequestBody final StudentDto studentDto) {
         studentService.updateStudent(Long.parseLong(id), studentDto);
 
-        return new ResponseEntity<>(studentService.getStudentById(Long.parseLong(id)), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getStudentDtoById(Long.parseLong(id)), HttpStatus.OK);
     }
 
     @HasRoles(Roles.TEACHER)
