@@ -3,7 +3,7 @@ package com.example.diplproj.clients;
 import com.auth0.client.auth.AuthAPI;
 import com.auth0.exception.Auth0Exception;
 import com.auth0.net.SignUpRequest;
-import com.example.diplproj.exceptions.AuthClientException;
+import com.example.diplproj.exceptions.AuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class Auth0ServiceImpl implements Auth0Service {
         try {
             request.execute();
         } catch (Auth0Exception e) {
-            throw new AuthClientException();
+            throw new AuthException();
         }
     }
 }

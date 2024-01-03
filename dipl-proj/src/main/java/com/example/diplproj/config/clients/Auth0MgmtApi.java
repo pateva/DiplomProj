@@ -20,7 +20,6 @@ public class Auth0MgmtApi {
 
     @Bean
     public AuthAPI createAuth0MgmtApi() {
-        System.err.println(domain + "\t" + clientId + "\t" + clientSecret);
         return AuthAPI.newBuilder(domain, clientId, clientSecret).build();
     }
 }

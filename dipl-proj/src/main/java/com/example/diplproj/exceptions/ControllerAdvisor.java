@@ -25,8 +25,8 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @ExceptionHandler(AuthClientException.class)
-    public ResponseEntity<Object> handleAuthClientException(AuthClientException ex) {
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity<Object> handleAuthClientException(AuthException ex) {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 }
