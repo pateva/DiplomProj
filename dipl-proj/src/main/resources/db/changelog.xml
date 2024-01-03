@@ -216,5 +216,11 @@
             </column>
         </addColumn>
         <addUniqueConstraint tableName="students" columnNames="fac_number"/>
+        <dropColumn tableName="thesis_applications" columnName="status"/>
+        <addColumn tableName="thesis_applications">
+            <column name="status" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

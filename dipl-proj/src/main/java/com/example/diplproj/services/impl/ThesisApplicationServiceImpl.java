@@ -9,6 +9,7 @@ import com.example.diplproj.services.contracts.DepartmentService;
 import com.example.diplproj.services.contracts.StudentService;
 import com.example.diplproj.services.contracts.TeacherService;
 import com.example.diplproj.services.contracts.ThesisApplicationService;
+import com.example.diplproj.utils.enums.ApplicationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,7 +39,8 @@ public class ThesisApplicationServiceImpl implements ThesisApplicationService {
         ThesisApplication thesisApplication = thesisApplicationMapper.toThesisApplication(thesisApplicationCreationDto);
         thesisApplication.setStudent(studentService.getStudentById(thesisApplicationCreationDto.getStudentId()))
                 .setTeacher(teacherService.getTeacherByEmail(teacherEmail))
-                .setDepartment(departmentService.getById(thesisApplicationCreationDto.getDepartmentId()));
+                .setDepartment(departmentService.getById(thesisApplicationCreationDto.getDepartmentId()))
+                .setStatus(ApplicationStatus.TO_BE_REVIEWED);
 
        return thesisApplicationRepository.save(thesisApplication);
     }

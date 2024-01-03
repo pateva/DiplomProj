@@ -1,6 +1,7 @@
 package com.example.diplproj.data.dtos;
 
 import com.example.diplproj.data.models.Department;
+import com.example.diplproj.utils.enums.ApplicationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,5 @@ public class ThesisApplicationPartialDto {
     private Department department;
     private StudentDto student;
     private TeacherDto teacher;
+    private ApplicationStatus status;
 }

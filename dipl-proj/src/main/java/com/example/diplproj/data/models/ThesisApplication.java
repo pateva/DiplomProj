@@ -1,6 +1,9 @@
 package com.example.diplproj.data.models;
 
+import com.example.diplproj.utils.converters.ApplicationStatusEnumConverter;
+import com.example.diplproj.utils.enums.ApplicationStatus;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,7 +49,8 @@ public class ThesisApplication {
     private String techStack;
 
     @Column(name = "status")
-    private boolean status;
+    @Convert(converter = ApplicationStatusEnumConverter.class)
+    private ApplicationStatus status;
 
     @Column(name = "created_at")
     @CreationTimestamp
