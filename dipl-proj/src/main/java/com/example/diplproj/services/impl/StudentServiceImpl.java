@@ -1,5 +1,6 @@
 package com.example.diplproj.services.impl;
 
+import com.example.diplproj.clients.Auth0Service;
 import com.example.diplproj.data.dtos.StudentDto;
 import com.example.diplproj.data.mappers.StudentMapper;
 import com.example.diplproj.data.models.Student;
@@ -7,9 +8,7 @@ import com.example.diplproj.data.repositories.StudentRepository;
 import com.example.diplproj.exceptions.EntityDoesNotExistException;
 import com.example.diplproj.services.contracts.StudentService;
 import com.example.diplproj.utils.Constants;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,9 +20,11 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final Auth0Service auth0Service;
 
     @Override
     public void createStudent(StudentDto studentDto) {
+
         Student student = studentMapper.dtoToStudent(studentDto);
         studentRepository.save(student);
     }

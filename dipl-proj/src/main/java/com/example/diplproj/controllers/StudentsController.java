@@ -1,5 +1,6 @@
 package com.example.diplproj.controllers;
 
+import com.example.diplproj.clients.Auth0ServiceImpl;
 import com.example.diplproj.data.dtos.StudentDto;
 import com.example.diplproj.services.contracts.StudentService;
 import com.example.diplproj.utils.annotations.HasRoles;
@@ -27,6 +28,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StudentsController {
     private final StudentService studentService;
+    private final Auth0ServiceImpl authService;
 
     @GetMapping
     public ResponseEntity<Page<StudentDto>> getAllStudents(@RequestParam(defaultValue = "0") int page,
@@ -36,7 +38,7 @@ public class StudentsController {
 
     }
 
-    @HasRoles("student")
+    @HasRoles("teacher")
     @GetMapping("/{id}")
     public ResponseEntity<StudentDto> getStudent(@PathVariable final String id,
                                                  @AuthenticationPrincipal Jwt jwt) {
@@ -47,6 +49,7 @@ public class StudentsController {
         return new ResponseEntity<>(studentService.getStudentById(Long.parseLong(id)), HttpStatus.OK);
     }
 
+    @HasRoles("teacher")
     @PostMapping
     public ResponseEntity<StudentDto> createStudent(@RequestBody final StudentDto studentDto) {
         studentService.createStudent(studentDto);

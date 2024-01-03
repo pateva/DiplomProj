@@ -24,5 +24,10 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleUniqueConstraintException(UniqueConstraintException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
     }
+
+    @ExceptionHandler(AuthClientException.class)
+    public ResponseEntity<Object> handleAuthClientException(AuthClientException ex) {
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
 }
 
