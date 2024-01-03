@@ -44,4 +44,18 @@ public class Auth0ServiceImpl implements Auth0Service {
 
         managementAPI.users().delete(id);
     }
+
+    public void updateUserEmail(String emailOld, String emailNew) {
+        Request<List<User>> listRequest = managementAPI.users().listByEmail(emailOld, new FieldsFilter());
+        User user;
+
+        try {
+            user = listRequest.execute().getBody().get(0);
+        } catch (Auth0Exception e) {
+            throw new AuthException();
+        }
+
+        user.setEmail(emailNew);
+        managementAPI.users().update(user.getId(), user);
+    }
 }

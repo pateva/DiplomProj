@@ -68,6 +68,15 @@ public class StudentServiceImpl implements StudentService {
         student.setFacNumber(studentDto.getFirstName())
                 .setLastName(studentDto.getLastName());
 
+        if(!student.getEmail().equals(studentDto.getEmail())) {
+            if (studentDto.getEmail() == null || studentRepository.existsByEmail(studentDto.getEmail())) {
+                throw new UniqueConstraintException(Constants.INVALID_EMAIL_ERROR_MSG);
+            }
+
+            auth0Service.updateUserEmail(student.getEmail(), studentDto.getEmail());
+            student.setEmail(studentDto.getEmail());
+        }
+
         studentRepository.save(student);
     }
 
