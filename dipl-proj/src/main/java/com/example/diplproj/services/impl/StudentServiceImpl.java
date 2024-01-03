@@ -6,6 +6,7 @@ import com.example.diplproj.data.mappers.StudentMapper;
 import com.example.diplproj.data.models.Student;
 import com.example.diplproj.data.repositories.StudentRepository;
 import com.example.diplproj.exceptions.EntityDoesNotExistException;
+import com.example.diplproj.exceptions.UniqueConstraintException;
 import com.example.diplproj.services.contracts.StudentService;
 import com.example.diplproj.utils.Constants;
 import lombok.RequiredArgsConstructor;
@@ -24,20 +25,27 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void createStudent(StudentDto studentDto) {
+        if (studentDto.getEmail() == null || studentRepository.existsByEmail(studentDto.getEmail())) {
+            throw new UniqueConstraintException(Constants.INVALID_EMAIL_ERROR_MSG);
+        }
 
-        Student student = studentMapper.dtoToStudent(studentDto);
-        studentRepository.save(student);
+        if (studentDto.getFacNumber() == null || studentRepository.existsByFacNumber(studentDto.getFacNumber())) {
+            throw new UniqueConstraintException(Constants.INVALID_FAC_NUMBER);
+        }
+
+        auth0Service.createUser(studentDto.getEmail(), studentDto.getLastName().concat("A123!").toCharArray());
+        studentRepository.save(studentMapper.dtoToStudent(studentDto));
     }
 
     @Override
     public StudentDto getStudentByEmail(String email) {
-        Student student = studentRepository.findByEmail(email);
+        Optional<Student> studentOpt = studentRepository.findByEmail(email);
 
-        if (student == null) {
+        if (studentOpt.isEmpty()) {
             throw new EntityDoesNotExistException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Student", "email address"));
         }
 
-        return studentMapper.studentToDto(student);
+        return studentMapper.studentToDto(studentOpt.get());
     }
 
     @Override

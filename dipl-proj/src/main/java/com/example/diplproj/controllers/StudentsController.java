@@ -28,6 +28,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StudentsController {
     private final StudentService studentService;
+
+    @HasRoles(Roles.TEACHER)
     @GetMapping
     public ResponseEntity<Page<StudentDto>> getAllStudents(@RequestParam(defaultValue = "0") int page,
                                                            @RequestParam(defaultValue = "25") int size,
@@ -36,7 +38,7 @@ public class StudentsController {
 
     }
 
-    @HasRoles(Roles.STUDENT)
+    @HasRoles({Roles.STUDENT, Roles.TEACHER})
     @GetMapping("/{id}")
     public ResponseEntity<StudentDto> getStudent(@PathVariable final String id,
                                                  @AuthenticationPrincipal Jwt jwt) {
@@ -55,6 +57,7 @@ public class StudentsController {
         return new ResponseEntity<>(studentService.getStudentByEmail(studentDto.getEmail()), HttpStatus.OK);
     }
 
+    @HasRoles(Roles.TEACHER)
     @PutMapping("/{id}")
     public ResponseEntity<StudentDto> updateStudent(@PathVariable final String id, @RequestBody final StudentDto studentDto) {
         studentService.updateStudent(Long.parseLong(id), studentDto);
@@ -62,6 +65,7 @@ public class StudentsController {
         return new ResponseEntity<>(studentService.getStudentById(Long.parseLong(id)), HttpStatus.OK);
     }
 
+    @HasRoles(Roles.TEACHER)
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStudent(@PathVariable final String id) {
         studentService.deleteStudent(Long.parseLong(id));
