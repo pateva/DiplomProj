@@ -66,8 +66,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = getStudent(id);
 
         student.setFacNumber(studentDto.getFirstName())
-                .setLastName(studentDto.getLastName())
-                .setEmail(studentDto.getEmail());
+                .setLastName(studentDto.getLastName());
 
         studentRepository.save(student);
     }
@@ -75,6 +74,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) {
         Student student = getStudent(id);
+
+        auth0Service.deleteUser(student.getEmail());
         studentRepository.delete(student);
     }
 
