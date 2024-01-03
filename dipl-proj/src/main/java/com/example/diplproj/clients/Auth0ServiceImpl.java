@@ -22,7 +22,7 @@ public class Auth0ServiceImpl implements Auth0Service {
     @Value("${AUTH0_CONNECTION_DB}")
     private String connection;
 
-    public void createUser(String email, char[] password) {
+    public void createUser(String email, char[] password, List<String> roleIds) {
         SignUpRequest request = authAPI.signUp(email, password, connection);
 
         try {
@@ -30,19 +30,16 @@ public class Auth0ServiceImpl implements Auth0Service {
         } catch (Auth0Exception e) {
             throw new AuthException();
         }
-    }
-
-    public void deleteUser(String email) {
-        Request<List<User>> listRequest = managementAPI.users().listByEmail(email, new FieldsFilter());
-        String id;
 
         try {
-            id = listRequest.execute().getBody().get(0).getId();
+            assignRoleToUser(getAuth0UserId(email), roleIds);
         } catch (Auth0Exception e) {
             throw new AuthException();
         }
+    }
 
-        managementAPI.users().delete(id);
+    public void deleteUser(String email) {
+        managementAPI.users().delete(getAuth0UserId(email));
     }
 
     public void updateUserEmail(String emailOld, String emailNew) {
@@ -57,5 +54,20 @@ public class Auth0ServiceImpl implements Auth0Service {
 
         user.setEmail(emailNew);
         managementAPI.users().update(user.getId(), user);
+    }
+
+    private void assignRoleToUser(String userId, List<String> roleIds) throws Auth0Exception {
+        // Assign the default role to the user
+        managementAPI.users().addRoles(userId, roleIds);
+    }
+
+    private String getAuth0UserId(String email) {
+        Request<List<User>> listRequest = managementAPI.users().listByEmail(email, new FieldsFilter());
+
+        try {
+            return listRequest.execute().getBody().get(0).getId();
+        } catch (Auth0Exception e) {
+            throw new AuthException();
+        }
     }
 }

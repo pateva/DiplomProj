@@ -23,9 +23,11 @@ public class HasRolesAspect {
 
         // Check if the user has one of the required roles
         for (Roles requiredRole : hasRoles.value()) {
-            if (!roles.contains(requiredRole.name())) {
-                throw new AuthException();
+            if (roles.contains(requiredRole.name())) {
+                return;
             }
         }
+
+        throw new AuthException();
     }
 }

@@ -9,11 +9,13 @@ import com.example.diplproj.exceptions.EntityDoesNotExistException;
 import com.example.diplproj.exceptions.UniqueConstraintException;
 import com.example.diplproj.services.contracts.StudentService;
 import com.example.diplproj.utils.Constants;
+import com.example.diplproj.utils.enums.Roles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,7 +35,7 @@ public class StudentServiceImpl implements StudentService {
             throw new UniqueConstraintException(Constants.INVALID_FAC_NUMBER);
         }
 
-        auth0Service.createUser(studentDto.getEmail(), studentDto.getLastName().concat("A123!").toCharArray());
+        auth0Service.createUser(studentDto.getEmail(), studentDto.getLastName().concat("A123!").toCharArray(), List.of(Roles.STUDENT.getVal()));
         studentRepository.save(studentMapper.dtoToStudent(studentDto));
     }
 
@@ -65,10 +67,10 @@ public class StudentServiceImpl implements StudentService {
     public void updateStudent(Long id, StudentDto studentDto) {
         Student student = getStudent(id);
 
-        student.setFacNumber(studentDto.getFirstName())
+        student.setFirstName(studentDto.getFirstName())
                 .setLastName(studentDto.getLastName());
 
-        if(!student.getEmail().equals(studentDto.getEmail())) {
+        if (!student.getEmail().equals(studentDto.getEmail())) {
             if (studentDto.getEmail() == null || studentRepository.existsByEmail(studentDto.getEmail())) {
                 throw new UniqueConstraintException(Constants.INVALID_EMAIL_ERROR_MSG);
             }
