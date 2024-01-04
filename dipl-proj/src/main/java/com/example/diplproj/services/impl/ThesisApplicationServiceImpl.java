@@ -1,20 +1,25 @@
 package com.example.diplproj.services.impl;
 
 import com.example.diplproj.data.dtos.ThesisApplicationCreationDto;
+import com.example.diplproj.data.dtos.ThesisApplicationDto;
 import com.example.diplproj.data.dtos.ThesisApplicationPartialDto;
 import com.example.diplproj.data.mappers.ThesisApplicationMapper;
 import com.example.diplproj.data.models.ThesisApplication;
 import com.example.diplproj.data.repositories.ThesisApplicationRepository;
+import com.example.diplproj.exceptions.EnumValueNotAllowedException;
 import com.example.diplproj.services.contracts.DepartmentService;
 import com.example.diplproj.services.contracts.StudentService;
 import com.example.diplproj.services.contracts.TeacherService;
 import com.example.diplproj.services.contracts.ThesisApplicationService;
+import com.example.diplproj.utils.Constants;
 import com.example.diplproj.utils.enums.ApplicationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -51,6 +56,29 @@ public class ThesisApplicationServiceImpl implements ThesisApplicationService {
                 .setDepartment(departmentService.getById(thesisApplicationCreationDto.getDepartmentId()))
                 .setStatus(ApplicationStatus.TO_BE_REVIEWED);
 
-       return thesisApplicationRepository.save(thesisApplication);
+        return thesisApplicationRepository.save(thesisApplication);
+    }
+
+    @Override
+    public void updateThesisApplicationStatus(Long id, int status) {
+        ThesisApplication thesisApplication = getThesisApplicationById(id);
+        thesisApplication.setStatus(ApplicationStatus.getFromValue(status));
+
+        thesisApplicationRepository.save(thesisApplication);
+    }
+
+    @Override
+    public ThesisApplicationDto getThesisApplicationDtoById(Long id) {
+        return thesisApplicationMapper.toThesisApplicationDto(getThesisApplicationById(id));
+    }
+
+    private ThesisApplication getThesisApplicationById(Long id) {
+        Optional<ThesisApplication> thesisApplicationOpt = thesisApplicationRepository.findById(id);
+
+        if (thesisApplicationOpt.isEmpty()) {
+            throw new EnumValueNotAllowedException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Application", "id"));
+        }
+
+        return thesisApplicationOpt.get();
     }
 }

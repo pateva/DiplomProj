@@ -12,11 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +52,13 @@ public class ThesisApplicationController {
         return new ResponseEntity<>(thesisApplicationService.getThesisApplicationsByStatus(page, size, status), HttpStatus.OK);
     }
 
+    @HasRoles({Roles.TEACHER, Roles.STUDENT})
+    @GetMapping("/{id}")
+    public ResponseEntity<ThesisApplicationDto> getThesisApplicationById(@PathVariable final Long id) {
+
+        return new ResponseEntity<>(thesisApplicationService.getThesisApplicationDtoById(id), HttpStatus.OK);
+    }
+
     @HasRoles(Roles.TEACHER)
     @PostMapping
     public ResponseEntity<ThesisApplicationDto> createThesisApplication(@RequestBody final ThesisApplicationCreationDto thesisApplicationDto,
@@ -63,5 +70,13 @@ public class ThesisApplicationController {
                                 .createThesisApplication(thesisApplicationDto, jwt.getClaims().get("email").toString())),
                 HttpStatus.OK);
 
+    }
+
+    @HasRoles(Roles.TEACHER)
+    @PatchMapping("/{id}")
+    public ResponseEntity<ThesisApplicationDto> updateThesisApplicationStatus(@PathVariable final Long id, @RequestParam(required = true) int status) {
+        thesisApplicationService.updateThesisApplicationStatus(id, status);
+
+        return new ResponseEntity<>(thesisApplicationService.getThesisApplicationDtoById(id), HttpStatus.ACCEPTED);
     }
 }
