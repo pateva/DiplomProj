@@ -14,6 +14,8 @@ import com.example.diplproj.services.contracts.ThesisReviewService;
 import com.example.diplproj.services.contracts.ThesisService;
 import com.example.diplproj.utils.Constants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +25,7 @@ public class ThesisReviewServiceImpl implements ThesisReviewService {
     private final TeacherService teacherService;
     private final ThesisService thesisService;
     private final ThesisReviewMapper thesisReviewMapper;
+
 
     @Override
     public ThesisReviewDto createThesisReview(ThesisReviewCreationDto thesisReviewCreationDto, String email) {
@@ -43,7 +46,11 @@ public class ThesisReviewServiceImpl implements ThesisReviewService {
     }
 
     @Override
-    public ThesisReviewDto getThesisReviewDtoById(Long id) {
-        return null;
+    public Page<ThesisReviewDto> getThesisReviewsByThesis(Long id, int page, int size) {
+        Thesis thesis = thesisService.getThesisById(id);
+        Page<ThesisReview> thesisPage = thesisReviewRepository.findAllByThesis(thesis, PageRequest.of(page, size));
+
+        return thesisPage.map(thesisReviewMapper::toThesisReviewDto);
     }
+
 }
