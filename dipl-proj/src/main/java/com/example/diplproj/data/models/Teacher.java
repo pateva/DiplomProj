@@ -15,6 +15,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -38,4 +39,19 @@ public class Teacher extends User {
 
     @OneToMany(mappedBy = "teacher")
     private Set<Thesis> theses;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teacher teacher = (Teacher) o;
+
+        return jobTitle == teacher.jobTitle;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), jobTitle);
+    }
 }

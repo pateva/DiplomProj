@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class})
+@Mapper(componentModel = "spring", uses = {UserMapper.class, ThesisApplicationMapper.class})
 public interface TeacherMapper {
     @Mapping(target = "thesisApplicationIdNames", expression = "java(mapThesisApplicationsToIdNameMap(teacher.getThesisApplications()))")
     TeacherDto toTeacherDto(Teacher teacher);
@@ -31,4 +31,5 @@ public interface TeacherMapper {
                 })
                 .collect(Collectors.toSet());
     }
+
 }

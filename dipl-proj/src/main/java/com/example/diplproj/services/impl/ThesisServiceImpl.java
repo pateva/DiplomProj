@@ -93,12 +93,15 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public ThesisDto updateThesisStatus(Long id, int status, Integer grade) {
+    public ThesisDto updateThesisStatus(Long id, Integer status, Integer grade) {
         Thesis thesis = getThesisById(id);
-        thesis.setThesisStatus(ThesisStatus.fromValueToEnum(status));
+
+        if (status != null) {
+            thesis.setThesisStatus(ThesisStatus.fromValueToEnum(status));
+        }
 
         if (grade != null) {
-            if(grade < 2 || grade > 6) {
+            if (grade < 2 || grade > 6) {
                 throw new UniqueConstraintException("Invalid grade");
             }
             thesis.setGrade(grade);
@@ -114,7 +117,8 @@ public class ThesisServiceImpl implements ThesisService {
         return Objects.equals(studentService.getStudentByEmail(email).getUserId(), thesisUserId);
     }
 
-    private Thesis getThesisById(Long id) {
+    @Override
+    public Thesis getThesisById(Long id) {
         Optional<Thesis> thesisOpt = thesisRepository.findById(id);
 
         if (thesisOpt.isEmpty()) {

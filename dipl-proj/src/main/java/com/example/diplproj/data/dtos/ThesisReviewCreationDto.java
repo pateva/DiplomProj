@@ -11,8 +11,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,17 +19,9 @@ import java.util.Map;
 @Accessors(chain = true)
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ThesisReviewDto {
-    @JsonProperty("review_id")
-    private Long reviewId;
-    @JsonProperty("thesisTitleId")
-    private Map<Long, String> thesisIdTitle;
-    @JsonProperty("teacher")
-    private Map<Long, List<String>> teacherIdName;
-    @JsonProperty("created_at")
-    private LocalDateTime createdAt;
-    @JsonProperty("updated_at")
-    private LocalDateTime updatedAt;
+public class ThesisReviewCreationDto {
+    @JsonProperty("thesis_id")
+    private Long thesisId;
     @JsonProperty("review")
     private String review;
     @JsonProperty("conclusion")

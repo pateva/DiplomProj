@@ -58,7 +58,7 @@ public class ThesisController {
     @HasRoles(Roles.TEACHER)
     @PatchMapping("/{id}")
     public ResponseEntity<ThesisDto> updateThesis(@PathVariable final Long id,
-                                                  @RequestParam final int status,
+                                                  @RequestParam (required = false) final Integer status,
                                                   @RequestParam (required = false) final Integer grade) {
 
         return new ResponseEntity<>(thesisService.updateThesisStatus(id, status, grade), HttpStatus.ACCEPTED);
