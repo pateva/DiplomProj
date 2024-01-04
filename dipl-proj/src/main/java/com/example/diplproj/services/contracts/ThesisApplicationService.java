@@ -21,4 +21,5 @@ public interface ThesisApplicationService {
     ThesisApplication getThesisApplicationById(Long id);
 
     Page<ThesisApplicationPartialDto> getThesisApplicationsLike(String title, int page, int size);
+    Page<ThesisApplicationPartialDto> getByTeacherAndStatus(Long id, int status, int page, int size);
 }

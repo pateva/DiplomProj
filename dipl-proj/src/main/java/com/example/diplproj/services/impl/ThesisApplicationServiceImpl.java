@@ -4,6 +4,7 @@ import com.example.diplproj.data.dtos.ThesisApplicationCreationDto;
 import com.example.diplproj.data.dtos.ThesisApplicationDto;
 import com.example.diplproj.data.dtos.ThesisApplicationPartialDto;
 import com.example.diplproj.data.mappers.ThesisApplicationMapper;
+import com.example.diplproj.data.models.Teacher;
 import com.example.diplproj.data.models.ThesisApplication;
 import com.example.diplproj.data.repositories.ThesisApplicationRepository;
 import com.example.diplproj.exceptions.EntityDoesNotExistException;
@@ -50,6 +51,21 @@ public class ThesisApplicationServiceImpl implements ThesisApplicationService {
     }
 
     @Override
+    public Page<ThesisApplicationPartialDto> getThesisApplicationsLike(String title, int page, int size) {
+        return thesisApplicationRepository.findByTitleContainingIgnoreCase(title, PageRequest.of(page, size))
+                .map(thesisApplicationMapper::thesisApplicationToThesisApplicationPartialDto);
+    }
+
+    @Override
+    public Page<ThesisApplicationPartialDto> getByTeacherAndStatus(Long id, int status, int page, int size) {
+        Teacher teacher = teacherService.getTeacherById(id);
+        ApplicationStatus applicationStatus = ApplicationStatus.getFromValue(status);
+
+        return thesisApplicationRepository.findByTeacherAndStatus(teacher, applicationStatus, PageRequest.of(page, size))
+                .map(thesisApplicationMapper::thesisApplicationToThesisApplicationPartialDto);
+    }
+
+    @Override
     public ThesisApplication createThesisApplication(ThesisApplicationCreationDto thesisApplicationCreationDto, String teacherEmail) {
         ThesisApplication thesisApplication = thesisApplicationMapper.toThesisApplication(thesisApplicationCreationDto);
         thesisApplication.setStudent(studentService.getStudentById(thesisApplicationCreationDto.getStudentId()))
@@ -84,9 +100,5 @@ public class ThesisApplicationServiceImpl implements ThesisApplicationService {
         return thesisApplicationOpt.get();
     }
 
-    @Override
-    public Page<ThesisApplicationPartialDto> getThesisApplicationsLike(String title, int page, int size) {
-        return thesisApplicationRepository.findByTitleContainingIgnoreCase(title, PageRequest.of(page, size))
-                .map(thesisApplicationMapper::thesisApplicationToThesisApplicationPartialDto);
-    }
+
 }
