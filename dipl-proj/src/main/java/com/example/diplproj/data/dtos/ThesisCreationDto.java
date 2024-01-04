@@ -3,26 +3,26 @@ package com.example.diplproj.data.dtos;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
+@Getter
+@Accessors(chain = true)
+@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ThesisApplicationCreationDto {
+public class ThesisCreationDto {
     @JsonProperty("title")
     private String title;
-    @JsonProperty("department_id")
-    private Long departmentId;
-    @JsonProperty("student_id")
-    private Long studentId;
-    @JsonProperty("purpose")
-    private String purpose;
-    @JsonProperty("tasks")
-    private String tasks;
-    @JsonProperty("technology_stack")
-    private String techStack;
+    @JsonProperty("text")
+    private String text;
+    @JsonProperty("teacher_id")
+    private Long teacherId;
+    @JsonProperty("thesis_application_id")
+    private Long thesisApplicationId;
 }

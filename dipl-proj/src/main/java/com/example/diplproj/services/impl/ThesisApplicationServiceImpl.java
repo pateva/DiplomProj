@@ -6,6 +6,7 @@ import com.example.diplproj.data.dtos.ThesisApplicationPartialDto;
 import com.example.diplproj.data.mappers.ThesisApplicationMapper;
 import com.example.diplproj.data.models.ThesisApplication;
 import com.example.diplproj.data.repositories.ThesisApplicationRepository;
+import com.example.diplproj.exceptions.EntityDoesNotExistException;
 import com.example.diplproj.exceptions.EnumValueNotAllowedException;
 import com.example.diplproj.services.contracts.DepartmentService;
 import com.example.diplproj.services.contracts.StudentService;
@@ -72,11 +73,12 @@ public class ThesisApplicationServiceImpl implements ThesisApplicationService {
         return thesisApplicationMapper.toThesisApplicationDto(getThesisApplicationById(id));
     }
 
-    private ThesisApplication getThesisApplicationById(Long id) {
+    @Override
+    public ThesisApplication getThesisApplicationById(Long id) {
         Optional<ThesisApplication> thesisApplicationOpt = thesisApplicationRepository.findById(id);
 
         if (thesisApplicationOpt.isEmpty()) {
-            throw new EnumValueNotAllowedException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Application", "id"));
+            throw new EntityDoesNotExistException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Application", "id"));
         }
 
         return thesisApplicationOpt.get();

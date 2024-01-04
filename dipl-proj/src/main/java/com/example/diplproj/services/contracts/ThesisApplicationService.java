@@ -13,4 +13,5 @@ public interface ThesisApplicationService {
     ThesisApplication createThesisApplication(ThesisApplicationCreationDto thesisApplicationCreationDto, String teacherEmail);
     void updateThesisApplicationStatus(Long id, int status);
     ThesisApplicationDto getThesisApplicationDtoById(Long id);
+    ThesisApplication getThesisApplicationById(Long id);
 }

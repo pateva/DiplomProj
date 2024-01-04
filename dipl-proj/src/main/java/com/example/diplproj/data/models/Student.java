@@ -28,4 +28,7 @@ public class Student extends User {
 
     @OneToMany(mappedBy = "student")
     private Set<ThesisApplication> thesisApplications;
+
+    @OneToMany(mappedBy = "student")
+    private Set<Thesis> theses;
 }

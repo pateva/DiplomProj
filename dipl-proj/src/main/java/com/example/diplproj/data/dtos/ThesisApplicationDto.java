@@ -1,6 +1,7 @@
 package com.example.diplproj.data.dtos;
 
 import com.example.diplproj.utils.enums.ApplicationStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ThesisApplicationDto {
     private Long applicationId;
     private String title;

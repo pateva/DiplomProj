@@ -6,4 +6,6 @@ public class Constants {
     public static final String UNIQUE_CONSTRAINT_ERROR_MSG = "This %s already exists";
     public static final String INVALID_EMAIL_ERROR_MSG = "Invalid email address";
     public static final String INVALID_FAC_NUMBER = "Invalid faculty number";
+    public static final String SUBMISSION_ERROR_MSG = "It is not possible to submit this thesis!";
+public static final String SUCCESSFUL_SUBMISSION_MSG = "Thesis has been successfully submitted";
 }

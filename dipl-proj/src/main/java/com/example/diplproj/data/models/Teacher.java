@@ -35,4 +35,7 @@ public class Teacher extends User {
 
     @OneToMany(mappedBy = "teacher")
     private Set<ThesisReview> thesisReviews;
+
+    @OneToMany(mappedBy = "teacher")
+    private Set<Thesis> theses;
 }

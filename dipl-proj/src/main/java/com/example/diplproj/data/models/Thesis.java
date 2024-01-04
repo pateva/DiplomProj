@@ -2,13 +2,17 @@ package com.example.diplproj.data.models;
 
 import com.example.diplproj.utils.converters.ThesisStatusConverter;
 import com.example.diplproj.utils.enums.ThesisStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -59,4 +63,16 @@ public class Thesis {
 
     @OneToMany(mappedBy = "thesis")
     private Set<ThesisReview> thesisReviews;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacher;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "thesis_application_id", referencedColumnName = "application_id")
+    private ThesisApplication thesisApplication;
 }

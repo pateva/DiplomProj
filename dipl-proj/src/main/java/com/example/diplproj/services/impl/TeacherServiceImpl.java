@@ -3,7 +3,6 @@ package com.example.diplproj.services.impl;
 import com.example.diplproj.clients.Auth0Service;
 import com.example.diplproj.data.dtos.TeacherDto;
 import com.example.diplproj.data.mappers.TeacherMapper;
-import com.example.diplproj.data.models.Student;
 import com.example.diplproj.data.models.Teacher;
 import com.example.diplproj.data.repositories.TeacherRepository;
 import com.example.diplproj.exceptions.EntityDoesNotExistException;
@@ -62,7 +61,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void updateTeacher(Long id, TeacherDto teacherDto) {
-        Teacher teacher = getTeacher(id);
+        Teacher teacher = getTeacherById(id);
 
         teacher.setFirstName(teacherDto.getFirstName())
                 .setLastName(teacherDto.getLastName());
@@ -82,15 +81,16 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherDto getById(Long id) {
-        return teacherMapper.toTeacherDto(getTeacher(id));
+        return teacherMapper.toTeacherDto(getTeacherById(id));
     }
 
     @Override
     public void deleteTeacher(Long id) {
-        teacherRepository.delete(getTeacher(id));
+        teacherRepository.delete(getTeacherById(id));
     }
 
-    private Teacher getTeacher(Long id) {
+    @Override
+    public Teacher getTeacherById(Long id) {
         Optional<Teacher> teacherOpt = teacherRepository.findById(id);
 
         if (teacherOpt.isEmpty()) {

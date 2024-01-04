@@ -223,4 +223,24 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="adjust-db-5" author="Petya Ateva">
+        <addColumn tableName="thesis">
+            <column name="student_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="teacher_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="thesis"
+                                 baseColumnNames="student_id"
+                                 constraintName="FK_thesis_student"
+                                 referencedTableName="students"
+                                 referencedColumnNames="user_id"/>
+        <addForeignKeyConstraint baseTableName="thesis"
+                                 baseColumnNames="teacher_id"
+                                 constraintName="FK_thesis_teacher"
+                                 referencedTableName="teachers"
+                                 referencedColumnNames="user_id"/>
+    </changeSet>
 </databaseChangeLog>
