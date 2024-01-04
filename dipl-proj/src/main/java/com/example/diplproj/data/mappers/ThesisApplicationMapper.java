@@ -9,9 +9,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ThesisApplicationMapper {
+    @Mapping(target = "departmentName", source = "department.name")
     ThesisApplicationPartialDto thesisApplicationToThesisApplicationPartialDto(ThesisApplication application);
     ThesisApplication toThesisApplication(ThesisApplicationCreationDto thesisApplicationCreationDto);
-    @Mapping(target = "departmentId", source = "department.departmentId")
+    @Mapping(target = "departmentName", source = "department.name")
     ThesisApplicationDto toThesisApplicationDto(ThesisApplication thesisApplication);
 
 }

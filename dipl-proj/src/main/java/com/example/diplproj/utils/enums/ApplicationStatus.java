@@ -10,19 +10,24 @@ public enum ApplicationStatus implements IntegerValueEnum<ApplicationStatus> {
     APPROVED(2),
     NOT_APPROVED(3);
 
-    private final int val;
+    private final int value;
 
     ApplicationStatus(int val) {
-        this.val = val;
-    }
-
-    @Override
-    public int getValue() {
-        return val;
+        this.value = val;
     }
 
     @Override
     public ApplicationStatus fromValue(int value) {
+        for(ApplicationStatus applicationStatus : ApplicationStatus.values()) {
+            if(applicationStatus.getValue() == value) {
+                return applicationStatus;
+            }
+        }
+
+        throw new EnumValueNotAllowedException(String.format(Constants.ENUM_VALUE_NOT_ALLOWED_ERROR_MSG, "application status"));
+    }
+
+    public static ApplicationStatus getFromValue(int value) {
         for(ApplicationStatus applicationStatus : ApplicationStatus.values()) {
             if(applicationStatus.getValue() == value) {
                 return applicationStatus;

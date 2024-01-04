@@ -35,9 +35,10 @@ public class ThesisApplicationServiceImpl implements ThesisApplicationService {
     }
 
     @Override
-    public Page<ThesisApplicationPartialDto> getThesisApplicationsByStatus(int page, int size, ApplicationStatus status) {
+    public Page<ThesisApplicationPartialDto> getThesisApplicationsByStatus(int page, int size, int status) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ThesisApplication> thesisApplicationPage = thesisApplicationRepository.findAllByStatus(pageable, status);
+        ApplicationStatus applicationStatus = ApplicationStatus.getFromValue(status);
+        Page<ThesisApplication> thesisApplicationPage = thesisApplicationRepository.findAllByStatus(pageable, applicationStatus);
 
         return thesisApplicationPage.map(thesisApplicationMapper::thesisApplicationToThesisApplicationPartialDto);
     }

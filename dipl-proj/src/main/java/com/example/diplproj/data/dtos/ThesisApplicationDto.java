@@ -1,6 +1,5 @@
 package com.example.diplproj.data.dtos;
 
-import com.example.diplproj.data.models.Department;
 import com.example.diplproj.utils.enums.ApplicationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +21,7 @@ public class ThesisApplicationDto {
     private ApplicationStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Long departmentId;
+    private String departmentName;
     private StudentDto student;
     private TeacherDto teacher;
 }

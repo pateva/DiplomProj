@@ -43,6 +43,15 @@ public class ThesisApplicationController {
         return new ResponseEntity<>(thesisApplicationService.getThesisApplications(page, size), HttpStatus.OK);
     }
 
+    @HasRoles({Roles.TEACHER, Roles.STUDENT})
+    @GetMapping("/statusFilter")
+    public ResponseEntity<Page<ThesisApplicationPartialDto>> getApplicationsByStatus(@RequestParam(defaultValue = "0") int page,
+                                                                                     @RequestParam(defaultValue = "25") int size,
+                                                                                     @RequestParam(defaultValue = "2") int status) {
+
+        return new ResponseEntity<>(thesisApplicationService.getThesisApplicationsByStatus(page, size, status), HttpStatus.OK);
+    }
+
     @HasRoles(Roles.TEACHER)
     @PostMapping
     public ResponseEntity<ThesisApplicationDto> createThesisApplication(@RequestBody final ThesisApplicationCreationDto thesisApplicationDto,
