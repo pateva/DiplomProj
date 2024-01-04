@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -94,6 +95,11 @@ public class StudentServiceImpl implements StudentService {
 
         auth0Service.deleteUser(student.getEmail());
         studentRepository.delete(student);
+    }
+
+    @Override
+    public List<Student> getAllByIds(Iterable<Long> ids) {
+        return studentRepository.findAllById(ids);
     }
 
     @Override

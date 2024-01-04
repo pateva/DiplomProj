@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -87,6 +88,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void deleteTeacher(Long id) {
         teacherRepository.delete(getTeacherById(id));
+    }
+
+    @Override
+    public List<Teacher> getInIds(Iterable<Long> ids) {
+        return teacherRepository.findAllById(ids);
     }
 
     @Override
