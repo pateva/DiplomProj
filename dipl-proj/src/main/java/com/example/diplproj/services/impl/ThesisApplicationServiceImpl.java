@@ -1,5 +1,6 @@
 package com.example.diplproj.services.impl;
 
+import com.example.diplproj.config.specs.ThesisApplicationSpecifications;
 import com.example.diplproj.data.dtos.ThesisApplicationCreationDto;
 import com.example.diplproj.data.dtos.ThesisApplicationDto;
 import com.example.diplproj.data.dtos.ThesisApplicationPartialDto;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -42,29 +44,23 @@ public class ThesisApplicationServiceImpl implements ThesisApplicationService {
     }
 
     @Override
-    public Page<ThesisApplicationPartialDto> getThesisApplicationsByStatus(int page, int size, int status) {
+    public Page<ThesisApplicationPartialDto> getThesisApplications2(String title, Long teacherId, Integer status, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        ApplicationStatus applicationStatus = ApplicationStatus.getFromValue(status);
-        Page<ThesisApplication> thesisApplicationPage = thesisApplicationRepository.findAllByStatus(pageable, applicationStatus);
+        Specification<ThesisApplication> spec = Specification.where(null);
 
-        return thesisApplicationPage.map(thesisApplicationMapper::thesisApplicationToThesisApplicationPartialDto);
-    }
+        if (title != null) {
+            spec = spec.and(ThesisApplicationSpecifications.titleContains(title));
+        }
+        if (teacherId != null) {
+            spec = spec.and(ThesisApplicationSpecifications.hasTeacher(teacherId));
+        }
+        if (status != null) {
+            spec = spec.and(ThesisApplicationSpecifications.hasStatus(ApplicationStatus.getFromValue(status)));
+        }
 
-    @Override
-    public Page<ThesisApplicationPartialDto> getThesisApplicationsLike(String title, int page, int size) {
-        return thesisApplicationRepository.findByTitleContainingIgnoreCase(title, PageRequest.of(page, size))
+        return thesisApplicationRepository.findAll(spec, pageable)
                 .map(thesisApplicationMapper::thesisApplicationToThesisApplicationPartialDto);
     }
-
-    @Override
-    public Page<ThesisApplicationPartialDto> getByTeacherAndStatus(Long id, int status, int page, int size) {
-        Teacher teacher = teacherService.getTeacherById(id);
-        ApplicationStatus applicationStatus = ApplicationStatus.getFromValue(status);
-
-        return thesisApplicationRepository.findByTeacherAndStatus(teacher, applicationStatus, PageRequest.of(page, size))
-                .map(thesisApplicationMapper::thesisApplicationToThesisApplicationPartialDto);
-    }
-
     @Override
     public ThesisApplication createThesisApplication(ThesisApplicationCreationDto thesisApplicationCreationDto, String teacherEmail) {
         ThesisApplication thesisApplication = thesisApplicationMapper.toThesisApplication(thesisApplicationCreationDto);

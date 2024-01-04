@@ -30,46 +30,15 @@ public class ThesisApplicationController {
     private final ThesisApplicationService thesisApplicationService;
     private final ThesisApplicationMapper thesisApplicationMapper;
 
-    @GetMapping("/")
-    public String getHome(@AuthenticationPrincipal OAuth2User principal) {
-        return "home";
-    }
-
-    @HasRoles(Roles.TEACHER)
+    @HasRoles({Roles.TEACHER, Roles.STUDENT})
     @GetMapping
-    public ResponseEntity<Page<ThesisApplicationPartialDto>> getApplications(@RequestParam(defaultValue = "0") int page,
-                                                                             @RequestParam(defaultValue = "25") int size) {
+    public ResponseEntity<Page<ThesisApplicationPartialDto>> getApplications(@RequestParam(required = false) String title,
+                                                                                   @RequestParam(required = false) Long teacherId,
+                                                                                   @RequestParam(required = false) Integer status,
+                                                                                   @RequestParam(defaultValue = "0") int page,
+                                                                                   @RequestParam(defaultValue = "25") int size) {
 
-        return new ResponseEntity<>(thesisApplicationService.getThesisApplications(page, size), HttpStatus.OK);
-    }
-
-    @HasRoles({Roles.TEACHER, Roles.STUDENT})
-    @GetMapping("/filter-s")
-    public ResponseEntity<Page<ThesisApplicationPartialDto>> getApplicationsByStatus(@RequestParam(defaultValue = "0") int page,
-                                                                                     @RequestParam(defaultValue = "25") int size,
-                                                                                     @RequestParam(defaultValue = "2") int status) {
-
-        return new ResponseEntity<>(thesisApplicationService.getThesisApplicationsByStatus(page, size, status), HttpStatus.OK);
-    }
-
-
-    @HasRoles({Roles.TEACHER, Roles.STUDENT})
-    @GetMapping("/filter-tit")
-    public ResponseEntity<Page<ThesisApplicationPartialDto>> getThesisApplicationsWithTitleLike(@RequestParam String title,
-                                                                                                @RequestParam(defaultValue = "0") int page,
-                                                                                                @RequestParam(defaultValue = "25") int size) {
-
-        return new ResponseEntity<>(thesisApplicationService.getThesisApplicationsLike(title, page, size), HttpStatus.OK);
-    }
-
-    @HasRoles({Roles.TEACHER, Roles.STUDENT})
-    @GetMapping("/filter-t-s")
-    public ResponseEntity<Page<ThesisApplicationPartialDto>> getThesisApplicationsWithTeacherLike(@RequestParam Long id,
-                                                                                                  @RequestParam(defaultValue = "2") int status,
-                                                                                                  @RequestParam(defaultValue = "0") int page,
-                                                                                                  @RequestParam(defaultValue = "25") int size) {
-
-        return new ResponseEntity<>(thesisApplicationService.getByTeacherAndStatus(id, status, page, size), HttpStatus.OK);
+        return new ResponseEntity<>(thesisApplicationService.getThesisApplications2(title, teacherId, status, page, size), HttpStatus.OK);
     }
 
     @HasRoles({Roles.TEACHER, Roles.STUDENT})
@@ -78,7 +47,6 @@ public class ThesisApplicationController {
 
         return new ResponseEntity<>(thesisApplicationService.getThesisApplicationDtoById(id), HttpStatus.OK);
     }
-
 
     @HasRoles(Roles.TEACHER)
     @PostMapping
