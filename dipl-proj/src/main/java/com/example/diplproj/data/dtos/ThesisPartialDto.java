@@ -20,25 +20,13 @@ import java.util.Set;
 @Accessors(chain = true)
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ThesisDto {
+public class ThesisPartialDto {
     @JsonProperty("thesis_id")
     private Long thesisId;
     @JsonProperty("title")
     private String title;
-    @JsonProperty("text")
-    private String text;
     @JsonProperty("created_at")
     private LocalDateTime createdAt;
-    @JsonProperty("updated_at")
-    private LocalDateTime updatedAt;
     @JsonProperty("thesis_status")
     private ThesisStatus thesisStatus;
-    @JsonProperty("grade")
-    private Integer grade;
-    @JsonProperty("thesis_reviews")
-    private Set<ThesisReviewDto> thesisReviews;
-    @JsonProperty("teacher")
-    private TeacherDto teacher;
-    @JsonProperty("thesis_application_id")
-    private Long applicationId;
 }

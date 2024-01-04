@@ -28,4 +28,14 @@ public enum ThesisStatus implements IntegerValueEnum<ThesisStatus>{
 
         throw new EnumValueNotAllowedException(String.format(Constants.ENUM_VALUE_NOT_ALLOWED_ERROR_MSG, "thesis status"));
     }
+
+    public static ThesisStatus fromValueToEnum(int value) {
+        for(ThesisStatus status : ThesisStatus.values()) {
+            if(status.getValue() == value) {
+                return status;
+            }
+        }
+
+        throw new EnumValueNotAllowedException(String.format(Constants.ENUM_VALUE_NOT_ALLOWED_ERROR_MSG, "thesis status"));
+    }
 }
