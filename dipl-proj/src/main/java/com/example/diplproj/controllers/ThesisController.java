@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +30,13 @@ public class ThesisController {
                                                @AuthenticationPrincipal Jwt jwt) {
         thesisService.createThesis(thesisCreationDto, jwt.getClaim("email"));
         return new ResponseEntity<>(Constants.SUCCESSFUL_SUBMISSION_MSG, HttpStatus.OK);
+    }
+
+    @HasRoles({Roles.STUDENT, Roles.TEACHER})
+    @GetMapping("/{id}")
+    public ResponseEntity<ThesisDto> getThesisById(@PathVariable final Long id,
+                                                   @AuthenticationPrincipal Jwt jwt) {
+
+        return new ResponseEntity<>(thesisService.getThesisById(id, jwt.getClaimAsStringList("user_roles").get(0), jwt.getClaim("email")), HttpStatus.OK);
     }
 }

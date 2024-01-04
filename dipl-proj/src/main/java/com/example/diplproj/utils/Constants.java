@@ -7,5 +7,6 @@ public class Constants {
     public static final String INVALID_EMAIL_ERROR_MSG = "Invalid email address";
     public static final String INVALID_FAC_NUMBER = "Invalid faculty number";
     public static final String SUBMISSION_ERROR_MSG = "It is not possible to submit this thesis!";
-public static final String SUCCESSFUL_SUBMISSION_MSG = "Thesis has been successfully submitted";
+    public static final String SUCCESSFUL_SUBMISSION_MSG = "Thesis has been successfully submitted";
+    public static final String Forbidden_ERROS_MSG = "This is resource is not available to you";
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Map;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class TeacherDto extends UserDto {
     @JsonProperty("job_title")
     private JobTitle jobTitle;
     @JsonProperty("thesis_applications")
-    private Set<ThesisApplicationDto> thesisApplicationDtos;
+    private Set<Map<Long, String>> thesisApplicationIdNames;
     @JsonProperty("thesis_reviews")
     private Set<ThesisReviewDto> thesisReviewDtos;
 }
