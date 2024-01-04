@@ -6,9 +6,11 @@ import com.example.diplproj.data.models.ThesisDefense;
 import com.example.diplproj.services.contracts.ThesisDefenseService;
 import com.example.diplproj.utils.annotations.HasRoles;
 import com.example.diplproj.utils.enums.Roles;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ThesisDefenseController {
     private final ThesisDefenseService thesisDefenseService;
+
 
     @HasRoles(Roles.TEACHER)
     @PostMapping

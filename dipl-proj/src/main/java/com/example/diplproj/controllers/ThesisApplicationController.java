@@ -59,6 +59,15 @@ public class ThesisApplicationController {
         return new ResponseEntity<>(thesisApplicationService.getThesisApplicationDtoById(id), HttpStatus.OK);
     }
 
+    @HasRoles({Roles.TEACHER, Roles.STUDENT})
+    @GetMapping("/filter")
+    public ResponseEntity<Page<ThesisApplicationPartialDto>> getThesisApplicationsWithTitleLike(@RequestParam String title,
+                                                                                                @RequestParam(defaultValue = "0") int page,
+                                                                                                @RequestParam(defaultValue = "25") int size) {
+
+        return new ResponseEntity<>(thesisApplicationService.getThesisApplicationsLike(title, page, size), HttpStatus.OK);
+    }
+
     @HasRoles(Roles.TEACHER)
     @PostMapping
     public ResponseEntity<ThesisApplicationDto> createThesisApplication(@RequestBody final ThesisApplicationCreationDto thesisApplicationDto,

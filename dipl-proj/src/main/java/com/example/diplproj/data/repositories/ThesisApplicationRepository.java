@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ThesisApplicationRepository extends JpaRepository<ThesisApplication, Long> {
     Page<ThesisApplication> findAll(Pageable pageable);
     Page<ThesisApplication> findAllByStatus(Pageable pageable, ApplicationStatus applicationStatus);
+    Page<ThesisApplication> findByTitleContainingIgnoreCase(String title, Pageable pageable);
 }

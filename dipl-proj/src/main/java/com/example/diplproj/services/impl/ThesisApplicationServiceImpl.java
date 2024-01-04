@@ -83,4 +83,10 @@ public class ThesisApplicationServiceImpl implements ThesisApplicationService {
 
         return thesisApplicationOpt.get();
     }
+
+    @Override
+    public Page<ThesisApplicationPartialDto> getThesisApplicationsLike(String title, int page, int size) {
+        return thesisApplicationRepository.findByTitleContainingIgnoreCase(title, PageRequest.of(page, size))
+                .map(thesisApplicationMapper::thesisApplicationToThesisApplicationPartialDto);
+    }
 }
