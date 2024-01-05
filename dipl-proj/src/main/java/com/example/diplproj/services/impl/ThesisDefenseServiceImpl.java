@@ -1,16 +1,16 @@
 package com.example.diplproj.services.impl;
 
-import com.example.diplproj.data.dtos.ThesisDefenseCreationDto;
-import com.example.diplproj.data.dtos.ThesisDefenseDto;
-import com.example.diplproj.data.dtos.ThesisDefensePartialDto;
-import com.example.diplproj.data.dtos.ThesisDefenseUsersDto;
+import com.example.diplproj.data.dtos.ThesisDefenceCreationDto;
+import com.example.diplproj.data.dtos.ThesisDefenceDto;
+import com.example.diplproj.data.dtos.ThesisDefencePartialDto;
+import com.example.diplproj.data.dtos.ThesisDefenceUsersDto;
 import com.example.diplproj.data.mappers.ThesisDefenseMapper;
 import com.example.diplproj.data.models.Student;
 import com.example.diplproj.data.models.Teacher;
 import com.example.diplproj.data.models.ThesisDefense;
 import com.example.diplproj.data.models.associations.ThesisDefenseStudent;
 import com.example.diplproj.data.models.associations.ThesisDefenseTeacher;
-import com.example.diplproj.data.models.associations.keys.DefenseStudentKey;
+import com.example.diplproj.data.models.associations.keys.DefenceStudentKey;
 import com.example.diplproj.data.models.associations.keys.DefenseTeacherKey;
 import com.example.diplproj.data.repositories.ThesisDefenseRepository;
 import com.example.diplproj.exceptions.EntityDoesNotExistException;
@@ -41,15 +41,15 @@ public class ThesisDefenseServiceImpl implements ThesisDefenseService {
     private final ThesisDefenseTeacherService thesisDefenseTeacherService;
 
     @Override
-    public ThesisDefenseDto createThesisDefense(ThesisDefenseCreationDto thesisDefenseDto) {
+    public ThesisDefenceDto createThesisDefence(ThesisDefenceCreationDto thesisDefenseDto) {
         ThesisDefense thesisDefense = thesisDefenseMapper.toThesisDefenseFromCreation(thesisDefenseDto);
         thesisDefense = thesisDefenseRepository.save(thesisDefense);
 
-        return thesisDefenseMapper.toThesisDefenseDto(getThesisDefenseById(thesisDefense.getDefenseId()));
+        return thesisDefenseMapper.toThesisDefenseDto(getThesisDefenceById(thesisDefense.getDefenseId()));
     }
 
     @Override
-    public ThesisDefense getThesisDefenseById(Long id) {
+    public ThesisDefense getThesisDefenceById(Long id) {
         Optional<ThesisDefense> thesisDefenseOpt = thesisDefenseRepository.findById(id);
 
         if (thesisDefenseOpt.isEmpty()) {
@@ -60,15 +60,15 @@ public class ThesisDefenseServiceImpl implements ThesisDefenseService {
     }
 
     @Override
-    public ThesisDefenseDto getThesisDefenseDto(Long id) {
+    public ThesisDefenceDto getThesisDefenceDto(Long id) {
 
-        return thesisDefenseMapper.toThesisDefenseDto(getThesisDefenseById(id));
+        return thesisDefenseMapper.toThesisDefenseDto(getThesisDefenceById(id));
     }
 
     @Override
-    public ThesisDefenseDto addUsersToThesisDefense(Long id, ThesisDefenseUsersDto thesisDefenseUsersDto) {
-        ThesisDefense thesisDefense = getThesisDefenseById(id);
-        List<Long> users = thesisDefenseUsersDto.getTeachers();
+    public ThesisDefenceDto addUsersToThesisDefence(Long id, ThesisDefenceUsersDto thesisDefenceUsersDto) {
+        ThesisDefense thesisDefense = getThesisDefenceById(id);
+        List<Long> users = thesisDefenceUsersDto.getTeachers();
         List<ThesisDefenseTeacher> thesisDefenseTeacherList = new ArrayList<>();
         List<ThesisDefenseStudent> thesisDefenseStudentsList = new ArrayList<>();
 
@@ -90,7 +90,7 @@ public class ThesisDefenseServiceImpl implements ThesisDefenseService {
             }
         }
 
-        users = thesisDefenseUsersDto.getStudents();
+        users = thesisDefenceUsersDto.getStudents();
 
         if (!users.isEmpty()) {
             for (Long studentId : users) {
@@ -99,7 +99,7 @@ public class ThesisDefenseServiceImpl implements ThesisDefenseService {
                         .builder()
                         .defense(thesisDefense)
                         .student(student)
-                        .thesisDefenseStudentKey(DefenseStudentKey
+                        .thesisDefenceStudentKey(DefenceStudentKey
                                 .builder()
                                 .defenseId(id)
                                 .studentId(studentId)
@@ -112,13 +112,37 @@ public class ThesisDefenseServiceImpl implements ThesisDefenseService {
         thesisDefenseTeacherService.saveAll(thesisDefenseTeacherList);
         thesisDefenseStudentService.saveAll(thesisDefenseStudentsList);
 
-        return thesisDefenseMapper.toThesisDefenseDto(getThesisDefenseById(id));
+        return thesisDefenseMapper.toThesisDefenseDto(getThesisDefenceById(id));
     }
 
     @Override
-    public Page<ThesisDefensePartialDto> getThesisDefenses(int page, int size) {
+    public Page<ThesisDefencePartialDto> getThesisDefences(int page, int size) {
         Page<ThesisDefense> thesisDefensePage = thesisDefenseRepository.findAll(PageRequest.of(page, size));
 
         return thesisDefensePage.map(thesisDefenseMapper::toThesisDefensePartialDto);
+    }
+
+    @Override
+    public ThesisDefenceDto updateThesisDefence(Long id, ThesisDefenceCreationDto thesisDefenceCreationDto) {
+        ThesisDefense thesisDefense = getThesisDefenceById(id);
+        thesisDefense.setDateTime(thesisDefenceCreationDto.getDateTime());
+        thesisDefenseRepository.save(thesisDefense);
+
+        return getThesisDefenceDto(id);
+    }
+
+    @Override
+    public ThesisDefenceDto removeStudentFromDefence(Long id, Long studentId) {
+        if (!thesisDefenseRepository.existsById(id)) {
+            throw new EntityDoesNotExistException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Defense", "this Id"));
+        } else if (!studentService.existsById(studentId)) {
+            throw new EntityDoesNotExistException(String.format(Constants.ENTITY_DOES_NOT_EXISTS_ERROR_MSG, "Student", "this id"));
+        } else if(!thesisDefenseStudentService.existsById(studentId, id)) {
+            throw new EntityDoesNotExistException(Constants.USER_NOT_REGISTERED_ERROR_MSG);
+        }
+
+        thesisDefenseStudentService.deleteThesisDefenceStudent(studentId, id);
+
+        return getThesisDefenceDto(id);
     }
 }

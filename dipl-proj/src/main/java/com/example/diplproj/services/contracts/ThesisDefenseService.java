@@ -1,23 +1,24 @@
 package com.example.diplproj.services.contracts;
 
-import com.example.diplproj.data.dtos.ThesisDefenseCreationDto;
-import com.example.diplproj.data.dtos.ThesisDefenseDto;
-import com.example.diplproj.data.dtos.ThesisDefensePartialDto;
-import com.example.diplproj.data.dtos.ThesisDefenseUsersDto;
+import com.example.diplproj.data.dtos.ThesisDefenceCreationDto;
+import com.example.diplproj.data.dtos.ThesisDefenceDto;
+import com.example.diplproj.data.dtos.ThesisDefencePartialDto;
+import com.example.diplproj.data.dtos.ThesisDefenceUsersDto;
 import com.example.diplproj.data.models.ThesisDefense;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-import java.util.Map;
-
 public interface ThesisDefenseService {
-    ThesisDefenseDto createThesisDefense(ThesisDefenseCreationDto thesisDefenseDto);
+    ThesisDefenceDto createThesisDefence(ThesisDefenceCreationDto thesisDefenseDto);
 
-    ThesisDefense getThesisDefenseById(Long id);
+    ThesisDefense getThesisDefenceById(Long id);
 
-    ThesisDefenseDto getThesisDefenseDto(Long id);
+    ThesisDefenceDto getThesisDefenceDto(Long id);
 
-    ThesisDefenseDto addUsersToThesisDefense(Long id, ThesisDefenseUsersDto thesisDefenseUsersDto);
+    ThesisDefenceDto addUsersToThesisDefence(Long id, ThesisDefenceUsersDto thesisDefenceUsersDto);
 
-    Page<ThesisDefensePartialDto> getThesisDefenses(int page, int size);
+    Page<ThesisDefencePartialDto> getThesisDefences(int page, int size);
+
+    ThesisDefenceDto updateThesisDefence(Long id, ThesisDefenceCreationDto thesisCreationDto);
+
+    ThesisDefenceDto removeStudentFromDefence(Long id, Long studentId);
 }

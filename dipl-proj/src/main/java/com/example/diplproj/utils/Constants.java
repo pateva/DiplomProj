@@ -9,4 +9,5 @@ public class Constants {
     public static final String SUBMISSION_ERROR_MSG = "It is not possible to submit this thesis!";
     public static final String SUCCESSFUL_SUBMISSION_MSG = "Thesis has been successfully submitted";
     public static final String MISSING_INFO_ERROR_MSG = "Missing information from the review";
+    public static final String USER_NOT_REGISTERED_ERROR_MSG = "The user is not registere for this defence";
 }

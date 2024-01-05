@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,9 +21,16 @@ import java.util.List;
 @Accessors(chain = true)
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ThesisDefenseUsersDto {
+public class ThesisDefenceDto {
+    @JsonProperty("defense_id")
+    private Long defenseId;
+
+    @JsonProperty("datetime")
+    private LocalDateTime dateTime;
+
     @JsonProperty("teachers")
-    List<Long> teachers;
+    private Set<Map<Long, List<String>>> teachers;
+
     @JsonProperty("students")
-    List<Long> students;
+    private Set<Map<Long, List<String>>> students;
 }

@@ -2,7 +2,7 @@ package com.example.diplproj.data.models.associations;
 
 import com.example.diplproj.data.models.Student;
 import com.example.diplproj.data.models.ThesisDefense;
-import com.example.diplproj.data.models.associations.keys.DefenseStudentKey;
+import com.example.diplproj.data.models.associations.keys.DefenceStudentKey;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -26,7 +26,7 @@ import lombok.experimental.Accessors;
 @Setter
 public class ThesisDefenseStudent {
     @Id
-    private DefenseStudentKey thesisDefenseStudentKey;
+    private DefenceStudentKey thesisDefenceStudentKey;
 
     @ManyToOne
     @MapsId("defenseId")
