@@ -9,6 +9,8 @@ import com.example.diplproj.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ThesisDefenceTeacherServiceImpl implements ThesisDefenceTeacherService {
@@ -40,5 +42,10 @@ public class ThesisDefenceTeacherServiceImpl implements ThesisDefenceTeacherServ
         }
 
         thesisDefenceTeacherRepository.deleteById(defenceTeacherKey);
+    }
+
+    @Override
+    public List<ThesisDefenseTeacher> getThesisDefenceTeachersByDefenceId(Long defenceId) {
+        return thesisDefenceTeacherRepository.findAllByDefenceId(defenceId);
     }
 }

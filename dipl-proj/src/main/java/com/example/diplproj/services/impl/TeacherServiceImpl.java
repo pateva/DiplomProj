@@ -4,10 +4,12 @@ import com.example.diplproj.clients.Auth0Service;
 import com.example.diplproj.data.dtos.TeacherDto;
 import com.example.diplproj.data.mappers.TeacherMapper;
 import com.example.diplproj.data.models.Teacher;
+import com.example.diplproj.data.models.associations.ThesisDefenseTeacher;
 import com.example.diplproj.data.repositories.TeacherRepository;
 import com.example.diplproj.exceptions.EntityDoesNotExistException;
 import com.example.diplproj.exceptions.UniqueConstraintException;
 import com.example.diplproj.services.contracts.TeacherService;
+import com.example.diplproj.services.contracts.ThesisDefenceTeacherService;
 import com.example.diplproj.utils.Constants;
 import com.example.diplproj.utils.enums.Roles;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
     private final Auth0Service auth0Service;
+    private final ThesisDefenceTeacherService thesisDefenceTeacherService;
 
     @Override
     public Page<TeacherDto> getAllTeachers(int page, int size) {
@@ -92,6 +96,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public boolean existsById(Long id) {
         return teacherRepository.existsById(id);
+    }
+
+    @Override
+    public List<Teacher> getTeachersToDefence(Long defenceId) {
+        List<ThesisDefenseTeacher> thesisDefenseTeachers = thesisDefenceTeacherService.getThesisDefenceTeachersByDefenceId(defenceId);
+
+        return thesisDefenseTeachers
+                .stream()
+                .map(ThesisDefenseTeacher::getTeacher).toList();
     }
 
     @Override

@@ -4,10 +4,12 @@ import com.example.diplproj.clients.Auth0Service;
 import com.example.diplproj.data.dtos.StudentDto;
 import com.example.diplproj.data.mappers.StudentMapper;
 import com.example.diplproj.data.models.Student;
+import com.example.diplproj.data.models.associations.ThesisDefenceStudent;
 import com.example.diplproj.data.repositories.StudentRepository;
 import com.example.diplproj.exceptions.EntityDoesNotExistException;
 import com.example.diplproj.exceptions.UniqueConstraintException;
 import com.example.diplproj.services.contracts.StudentService;
+import com.example.diplproj.services.contracts.ThesisDefenceStudentService;
 import com.example.diplproj.utils.Constants;
 import com.example.diplproj.utils.enums.Roles;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final Auth0Service auth0Service;
+    private final ThesisDefenceStudentService thesisDefenceStudentService;
 
     @Override
     public void createStudent(StudentDto studentDto) {
@@ -99,6 +102,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public boolean existsById(Long id) {
         return studentRepository.existsById(id);
+    }
+
+    @Override
+    public List<Student> getStudentToDefence(Long defenceId) {
+        List<ThesisDefenceStudent> thesisDefenceStudents = thesisDefenceStudentService.getByDefenceId(defenceId);
+
+        return thesisDefenceStudents
+                .stream()
+                .map(ThesisDefenceStudent::getStudent).toList();
     }
 
     @Override

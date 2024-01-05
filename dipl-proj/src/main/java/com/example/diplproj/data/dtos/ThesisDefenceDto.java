@@ -29,8 +29,8 @@ public class ThesisDefenceDto {
     private LocalDateTime dateTime;
 
     @JsonProperty("teachers")
-    private Set<Map<Long, List<String>>> teachers;
+    private Map<Long, List<String>> teachers;
 
     @JsonProperty("students")
-    private Set<Map<Long, List<String>>> students;
+    private Map<Long, List<String>> students;
 }

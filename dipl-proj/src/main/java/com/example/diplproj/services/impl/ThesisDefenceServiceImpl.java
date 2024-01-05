@@ -4,6 +4,8 @@ import com.example.diplproj.data.dtos.ThesisDefenceCreationDto;
 import com.example.diplproj.data.dtos.ThesisDefenceDto;
 import com.example.diplproj.data.dtos.ThesisDefencePartialDto;
 import com.example.diplproj.data.dtos.ThesisDefenceUsersDto;
+import com.example.diplproj.data.mappers.CustomDefenceMapperImpl;
+import com.example.diplproj.data.mappers.CustomThesisDefenceMapper;
 import com.example.diplproj.data.mappers.ThesisDefenceMapper;
 import com.example.diplproj.data.models.Student;
 import com.example.diplproj.data.models.Teacher;
@@ -39,6 +41,7 @@ public class ThesisDefenceServiceImpl implements ThesisDefenceService {
     private final StudentService studentService;
     private final ThesisDefenceStudentService thesisDefenceStudentService;
     private final ThesisDefenceTeacherService thesisDefenceTeacherService;
+    private final CustomThesisDefenceMapper customThesisDefenceMapper;
 
     @Override
     public ThesisDefenceDto createThesisDefence(ThesisDefenceCreationDto thesisDefenseDto) {
@@ -62,7 +65,7 @@ public class ThesisDefenceServiceImpl implements ThesisDefenceService {
     @Override
     public ThesisDefenceDto getThesisDefenceDto(Long id) {
 
-        return thesisDefenceMapper.toThesisDefenseDto(getThesisDefenceById(id));
+        return customThesisDefenceMapper.toThesisDefenceDto(getThesisDefenceById(id));
     }
 
     @Override
@@ -112,7 +115,7 @@ public class ThesisDefenceServiceImpl implements ThesisDefenceService {
         thesisDefenceTeacherService.saveAll(thesisDefenseTeacherList);
         thesisDefenceStudentService.saveAll(thesisDefenceStudentsList);
 
-        return thesisDefenceMapper.toThesisDefenseDto(getThesisDefenceById(id));
+        return customThesisDefenceMapper.toThesisDefenceDto(getThesisDefenceById(id));
     }
 
     @Override
