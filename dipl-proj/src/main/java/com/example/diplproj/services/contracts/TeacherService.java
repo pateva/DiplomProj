@@ -16,5 +16,6 @@ public interface TeacherService {
     TeacherDto getById(Long id);
     Teacher getTeacherById(Long id);
     void deleteTeacher(Long id);
-    List<Teacher> getInIds(Iterable<Long> ids);
+    boolean existsById(Long id);
+
 }

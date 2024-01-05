@@ -1,21 +1,21 @@
 package com.example.diplproj.services.impl;
 
-import com.example.diplproj.data.models.associations.ThesisDefenseStudent;
+import com.example.diplproj.data.models.associations.ThesisDefenceStudent;
 import com.example.diplproj.data.models.associations.keys.DefenceStudentKey;
 import com.example.diplproj.data.repositories.associations.ThesisDefenceStudentRepository;
 import com.example.diplproj.exceptions.EntityDoesNotExistException;
-import com.example.diplproj.services.contracts.ThesisDefenseStudentService;
+import com.example.diplproj.services.contracts.ThesisDefenceStudentService;
 import com.example.diplproj.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ThesisDefenseStudentServiceImpl implements ThesisDefenseStudentService {
+public class ThesisDefenceStudentServiceImpl implements ThesisDefenceStudentService {
     private final ThesisDefenceStudentRepository thesisDefenceStudentRepository;
 
     @Override
-    public void saveAll(Iterable<ThesisDefenseStudent> thesisDefenseStudents) {
+    public void saveAll(Iterable<ThesisDefenceStudent> thesisDefenseStudents) {
         thesisDefenceStudentRepository.saveAll(thesisDefenseStudents);
     }
 
@@ -24,7 +24,7 @@ public class ThesisDefenseStudentServiceImpl implements ThesisDefenseStudentServ
         return thesisDefenceStudentRepository.existsById(DefenceStudentKey
                 .builder()
                 .studentId(studentId)
-                .defenseId(defenceId)
+                .defenceId(defenceId)
                 .build());
     }
 
@@ -33,7 +33,7 @@ public class ThesisDefenseStudentServiceImpl implements ThesisDefenseStudentServ
         DefenceStudentKey defenceStudentKey = DefenceStudentKey
                 .builder()
                 .studentId(studentId)
-                .defenseId(defenceId)
+                .defenceId(defenceId)
                 .build();
 
         if(!thesisDefenceStudentRepository.existsById(defenceStudentKey)) {

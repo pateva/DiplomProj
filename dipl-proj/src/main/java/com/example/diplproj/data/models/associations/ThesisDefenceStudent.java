@@ -1,7 +1,7 @@
 package com.example.diplproj.data.models.associations;
 
 import com.example.diplproj.data.models.Student;
-import com.example.diplproj.data.models.ThesisDefense;
+import com.example.diplproj.data.models.ThesisDefence;
 import com.example.diplproj.data.models.associations.keys.DefenceStudentKey;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -17,21 +17,21 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Entity
-@Table(name = "thesis_defense_student")
+@Table(name = "thesis_defence_student")
 @Builder
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class ThesisDefenseStudent {
+public class ThesisDefenceStudent {
     @Id
     private DefenceStudentKey thesisDefenceStudentKey;
 
     @ManyToOne
-    @MapsId("defenseId")
-    @JoinColumn(name = "defense_id")
-    private ThesisDefense defense;
+    @MapsId("defenceId")
+    @JoinColumn(name = "defence_id")
+    private ThesisDefence defence;
 
     @ManyToOne
     @MapsId("studentId")

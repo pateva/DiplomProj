@@ -4,7 +4,7 @@ import com.example.diplproj.data.dtos.ThesisDefenceCreationDto;
 import com.example.diplproj.data.dtos.ThesisDefenceDto;
 import com.example.diplproj.data.dtos.ThesisDefencePartialDto;
 import com.example.diplproj.data.dtos.ThesisDefenceUsersDto;
-import com.example.diplproj.services.contracts.ThesisDefenseService;
+import com.example.diplproj.services.contracts.ThesisDefenceService;
 import com.example.diplproj.utils.annotations.HasRoles;
 import com.example.diplproj.utils.enums.Roles;
 import lombok.RequiredArgsConstructor;
@@ -26,47 +26,64 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/defences")
 @RequiredArgsConstructor
 public class ThesisDefenceController {
-    private final ThesisDefenseService thesisDefenseService;
+    private final ThesisDefenceService thesisDefenceService;
 
     @HasRoles({Roles.TEACHER, Roles.STUDENT})
     @GetMapping
-    public ResponseEntity<Page<ThesisDefencePartialDto>> getThesisDefenses(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<ThesisDefencePartialDto>> getThesisDefences(@RequestParam(defaultValue = "0") int page,
                                                                            @RequestParam(defaultValue = "25") int size) {
 
-        return new ResponseEntity<>(thesisDefenseService.getThesisDefences(page, size), HttpStatus.OK);
+        return new ResponseEntity<>(thesisDefenceService.getThesisDefences(page, size), HttpStatus.OK);
     }
 
     @HasRoles({Roles.TEACHER, Roles.STUDENT})
     @GetMapping("/{id}")
-    public ResponseEntity<ThesisDefenceDto> getThesisDefenseById(@PathVariable Long id) {
+    public ResponseEntity<ThesisDefenceDto> getThesisDefenceById(@PathVariable Long id) {
 
-        return new ResponseEntity<>(thesisDefenseService.getThesisDefenceDto(id), HttpStatus.OK);
+        return new ResponseEntity<>(thesisDefenceService.getThesisDefenceDto(id), HttpStatus.OK);
     }
 
     @HasRoles(Roles.TEACHER)
     @PostMapping
-    public ResponseEntity<ThesisDefenceDto> createThesisDefense(@RequestBody ThesisDefenceCreationDto thesisDefenseDto) {
+    public ResponseEntity<ThesisDefenceDto> createThesisDefence(@RequestBody ThesisDefenceCreationDto thesisDefenseDto) {
 
-        return new ResponseEntity<>(thesisDefenseService.createThesisDefence(thesisDefenseDto), HttpStatus.OK);
+        return new ResponseEntity<>(thesisDefenceService.createThesisDefence(thesisDefenseDto), HttpStatus.OK);
     }
 
+    @HasRoles(Roles.TEACHER)
     @PatchMapping("/{id}")
     public ResponseEntity<ThesisDefenceDto> addTeachersStudents(@PathVariable final Long id,
                                                                 @RequestBody final ThesisDefenceUsersDto thesisDefenceUsersDto) {
 
-        return new ResponseEntity<>(thesisDefenseService.addUsersToThesisDefence(id, thesisDefenceUsersDto), HttpStatus.OK);
+        return new ResponseEntity<>(thesisDefenceService.addUsersToThesisDefence(id, thesisDefenceUsersDto), HttpStatus.OK);
     }
 
+    @HasRoles(Roles.TEACHER)
     @PutMapping("/{id}")
-    public ResponseEntity<ThesisDefenceDto> updateThesisDefense(@PathVariable final Long id,
+    public ResponseEntity<ThesisDefenceDto> updateThesisDefence(@PathVariable final Long id,
                                                                 @RequestBody final ThesisDefenceCreationDto thesisDefenceCreationDto) {
-        return new ResponseEntity<>(thesisDefenseService.updateThesisDefence(id, thesisDefenceCreationDto), HttpStatus.OK);
+        return new ResponseEntity<>(thesisDefenceService.updateThesisDefence(id, thesisDefenceCreationDto), HttpStatus.OK);
     }
 
+    @HasRoles(Roles.TEACHER)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteThesisDefence(@PathVariable final Long id) {
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @HasRoles(Roles.TEACHER)
     @DeleteMapping("{id}/student/{studentId}")
-    public ResponseEntity<ThesisDefenceDto> removeStudentFromDefense(@PathVariable final Long id,
+    public ResponseEntity<ThesisDefenceDto> removeStudentFromDefence(@PathVariable final Long id,
                                                                      @PathVariable final Long studentId) {
 
-        return new ResponseEntity<>(thesisDefenseService.removeStudentFromDefence(id, studentId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(thesisDefenceService.removeStudentFromDefence(id, studentId), HttpStatus.ACCEPTED);
+    }
+
+    @HasRoles(Roles.TEACHER)
+    @DeleteMapping("{id}/teacher/{teacherId}")
+    public ResponseEntity<ThesisDefenceDto> removeTeacherFromThesisDefence(@PathVariable final Long id,
+                                                                           @PathVariable final Long teacherId) {
+        return new ResponseEntity<>(thesisDefenceService.removeTeacherFromDefence(id, teacherId), HttpStatus.OK);
     }
 }

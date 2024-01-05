@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ThesisDefencePartialDto {
-    @JsonProperty("defense_id")
-    private Long defenseId;
+    @JsonProperty("defence_id")
+    private Long defenceId;
 
     @JsonProperty("datetime")
     private LocalDateTime dateTime;

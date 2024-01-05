@@ -12,9 +12,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DefenseTeacherKey implements Serializable {
-    @Column(name = "defense_id")
-    private Long defenseId;
+public class DefenceTeacherKey implements Serializable {
+    @Column(name = "defence_id")
+    private Long defenceId;
 
     @Column(name = "teacher_id")
     private Long teacherId;

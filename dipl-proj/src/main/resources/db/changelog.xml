@@ -243,4 +243,12 @@
                                  referencedTableName="teachers"
                                  referencedColumnNames="user_id"/>
     </changeSet>
+    <changeSet id="adjust-db-6" author="Petya Ateva">
+        <renameTable oldTableName="thesis_defense_student" newTableName="thesis_defence_student"/>
+        <renameColumn tableName="thesis_defence_student" oldColumnName="defense_id" newColumnName="defence_id"/>
+        <renameTable oldTableName="thesis_defense_teacher" newTableName="thesis_defence_teacher"/>
+        <renameColumn tableName="thesis_defence_teacher" oldColumnName="defense_id" newColumnName="defence_id"/>
+        <renameTable oldTableName="thesis_defenses" newTableName="thesis_defences"/>
+        <renameColumn tableName="thesis_defences" oldColumnName="defense_id" newColumnName="defence_id"/>
+    </changeSet>
 </databaseChangeLog>

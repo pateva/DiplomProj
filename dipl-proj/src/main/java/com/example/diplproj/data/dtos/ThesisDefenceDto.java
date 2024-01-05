@@ -22,8 +22,8 @@ import java.util.Set;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ThesisDefenceDto {
-    @JsonProperty("defense_id")
-    private Long defenseId;
+    @JsonProperty("defence_id")
+    private Long defenceId;
 
     @JsonProperty("datetime")
     private LocalDateTime dateTime;

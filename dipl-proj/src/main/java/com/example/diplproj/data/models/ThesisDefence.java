@@ -1,6 +1,6 @@
 package com.example.diplproj.data.models;
 
-import com.example.diplproj.data.models.associations.ThesisDefenseStudent;
+import com.example.diplproj.data.models.associations.ThesisDefenceStudent;
 import com.example.diplproj.data.models.associations.ThesisDefenseTeacher;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,25 +20,25 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name = "thesis_defenses")
+@Table(name = "thesis_defences")
 @Builder
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class ThesisDefense {
+public class ThesisDefence {
     @Id
-    @Column(name = "defense_id")
+    @Column(name = "defence_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long defenseId;
+    private Long defenceId;
 
     @Column(name = "datetime")
     private LocalDateTime dateTime;
 
-    @OneToMany(mappedBy = "defense")
+    @OneToMany(mappedBy = "defence")
     private Set<ThesisDefenseTeacher> thesisDefenseTeachers;
 
-    @OneToMany(mappedBy = "defense")
-    private Set<ThesisDefenseStudent> thesisDefenseStudents;
+    @OneToMany(mappedBy = "defence")
+    private Set<ThesisDefenceStudent> thesisDefenceStudents;
 }

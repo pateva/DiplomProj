@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -91,8 +90,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getInIds(Iterable<Long> ids) {
-        return teacherRepository.findAllById(ids);
+    public boolean existsById(Long id) {
+        return teacherRepository.existsById(id);
     }
 
     @Override

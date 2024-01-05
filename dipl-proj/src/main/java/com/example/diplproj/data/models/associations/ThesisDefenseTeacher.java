@@ -1,7 +1,7 @@
 package com.example.diplproj.data.models.associations;
 
-import com.example.diplproj.data.models.ThesisDefense;
-import com.example.diplproj.data.models.associations.keys.DefenseTeacherKey;
+import com.example.diplproj.data.models.ThesisDefence;
+import com.example.diplproj.data.models.associations.keys.DefenceTeacherKey;
 import com.example.diplproj.data.models.Teacher;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "thesis_defense_teacher")
+@Table(name = "thesis_defence_teacher")
 @Builder
 @Accessors(chain = true)
 @NoArgsConstructor
@@ -29,12 +29,12 @@ import java.time.LocalDateTime;
 @Setter
 public class ThesisDefenseTeacher {
     @Id
-    private DefenseTeacherKey defenseTeacherKey;
+    private DefenceTeacherKey defenceTeacherKey;
 
     @ManyToOne
-    @MapsId("defenseId")
-    @JoinColumn(name = "defense_id")
-    private ThesisDefense defense;
+    @MapsId("defenceId")
+    @JoinColumn(name = "defence_id")
+    private ThesisDefence defence;
 
     @ManyToOne
     @MapsId("teacherId")
