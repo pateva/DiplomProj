@@ -8,4 +8,6 @@ public interface ThesisReviewService {
     ThesisReviewDto createThesisReview(ThesisReviewCreationDto thesisReviewCreationDto, String email);
 
     Page<ThesisReviewDto> getThesisReviewsByThesis(Long id, int page, int size);
+
+    int getByReviewsStudentCount(boolean conclusion);
 }

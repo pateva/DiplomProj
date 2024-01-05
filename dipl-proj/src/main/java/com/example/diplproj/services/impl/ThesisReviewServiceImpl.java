@@ -3,6 +3,7 @@ package com.example.diplproj.services.impl;
 import com.example.diplproj.data.dtos.ThesisReviewCreationDto;
 import com.example.diplproj.data.dtos.ThesisReviewDto;
 import com.example.diplproj.data.mappers.ThesisReviewMapper;
+import com.example.diplproj.data.models.Student;
 import com.example.diplproj.data.models.Teacher;
 import com.example.diplproj.data.models.Thesis;
 import com.example.diplproj.data.models.ThesisReview;
@@ -17,6 +18,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +56,14 @@ public class ThesisReviewServiceImpl implements ThesisReviewService {
         Page<ThesisReview> thesisPage = thesisReviewRepository.findAllByThesis(thesis, PageRequest.of(page, size));
 
         return thesisPage.map(thesisReviewMapper::toThesisReviewDto);
+    }
+
+    @Override
+    public int getByReviewsStudentCount(boolean conclusion) {
+        List<ThesisReview> thesisReviewList = thesisReviewRepository.findAllByConclusion(conclusion);
+        Set<Student> studentSet = thesisReviewList.stream().map(ThesisReview::getThesis).map(Thesis::getStudent).collect(Collectors.toSet());
+
+        return studentSet.size();
     }
 
 }

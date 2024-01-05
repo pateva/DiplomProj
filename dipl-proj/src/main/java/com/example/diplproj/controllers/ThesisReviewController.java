@@ -36,6 +36,13 @@ public class ThesisReviewController {
     }
 
     @HasRoles(Roles.TEACHER)
+    @GetMapping
+    public ResponseEntity<Integer> getStudentCountByConclusion(@RequestParam final boolean conclusion) {
+
+        return new ResponseEntity<>(thesisReviewService.getByReviewsStudentCount(conclusion), HttpStatus.OK);
+    }
+
+    @HasRoles(Roles.TEACHER)
     @PostMapping
     public ResponseEntity<ThesisReviewDto> createThesisReview(@RequestBody ThesisReviewCreationDto thesisCreationDto,
                                                               @AuthenticationPrincipal Jwt jwt) {
