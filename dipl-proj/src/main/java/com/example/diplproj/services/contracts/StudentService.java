@@ -2,6 +2,7 @@ package com.example.diplproj.services.contracts;
 
 import com.example.diplproj.data.dtos.StudentDto;
 import com.example.diplproj.data.models.Student;
+import com.example.diplproj.data.models.Thesis;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface StudentService {
     void deleteStudent(Long id);
     boolean existsById(Long id);
     List<Student> getStudentToDefence(Long defenceId);
+    StudentDto mapToStudentDto(Student student);
 }

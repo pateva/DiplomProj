@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ThesisRepository extends JpaRepository<Thesis, Long> {
     Page<Thesis> findByStudentAndThesisStatus(Student student, ThesisStatus status, Pageable pageable);
@@ -18,4 +20,6 @@ public interface ThesisRepository extends JpaRepository<Thesis, Long> {
     Page<Thesis> findByTeacherAndThesisStatus(Teacher teacher, ThesisStatus status, Pageable pageable);
 
     Page<Thesis> findByTeacher(Teacher teacher, Pageable pageable);
+
+    List<Thesis> findByGradeBetween(int a, int b);
 }

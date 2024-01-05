@@ -1,8 +1,10 @@
 package com.example.diplproj.controllers;
 
+import com.example.diplproj.data.dtos.StudentDto;
 import com.example.diplproj.data.dtos.ThesisCreationDto;
 import com.example.diplproj.data.dtos.ThesisDto;
 import com.example.diplproj.data.dtos.ThesisPartialDto;
+import com.example.diplproj.services.contracts.StudentService;
 import com.example.diplproj.services.contracts.ThesisService;
 import com.example.diplproj.utils.Constants;
 import com.example.diplproj.utils.annotations.HasRoles;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/thesis")
@@ -45,6 +49,14 @@ public class ThesisController {
 
         return new ResponseEntity<>(thesisService.findByUserAndStatus(jwt.getClaimAsStringList("user_roles").get(0),
                 jwt.getClaim("email"), status, page, size), HttpStatus.OK);
+    }
+
+    @HasRoles(Roles.TEACHER)
+    @GetMapping("/students/grade")
+    public ResponseEntity<List<StudentDto>> getStudentByGrade(@RequestParam final int a,
+                                                              @RequestParam final int b) {
+
+        return new ResponseEntity<>(thesisService.getAllByGrade(a, b), HttpStatus.OK);
     }
 
     @HasRoles(Roles.STUDENT)

@@ -1,5 +1,6 @@
 package com.example.diplproj.services.impl;
 
+import com.example.diplproj.data.dtos.StudentDto;
 import com.example.diplproj.data.dtos.ThesisCreationDto;
 import com.example.diplproj.data.dtos.ThesisDto;
 import com.example.diplproj.data.dtos.ThesisPartialDto;
@@ -28,6 +29,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.Role;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -110,6 +112,11 @@ public class ThesisServiceImpl implements ThesisService {
         thesisRepository.save(thesis);
 
         return thesisMapper.toThesisDto(getThesisById(id));
+    }
+
+    @Override
+    public List<StudentDto> getAllByGrade(int a, int b) {
+        return thesisRepository.findByGradeBetween(a, b).stream().map(Thesis::getStudent).map(studentService::mapToStudentDto).toList();
     }
 
     private boolean hasThesisAccess(String email, Long thesisUserId) {

@@ -4,12 +4,14 @@ import com.example.diplproj.clients.Auth0Service;
 import com.example.diplproj.data.dtos.StudentDto;
 import com.example.diplproj.data.mappers.StudentMapper;
 import com.example.diplproj.data.models.Student;
+import com.example.diplproj.data.models.Thesis;
 import com.example.diplproj.data.models.associations.ThesisDefenceStudent;
 import com.example.diplproj.data.repositories.StudentRepository;
 import com.example.diplproj.exceptions.EntityDoesNotExistException;
 import com.example.diplproj.exceptions.UniqueConstraintException;
 import com.example.diplproj.services.contracts.StudentService;
 import com.example.diplproj.services.contracts.ThesisDefenceStudentService;
+import com.example.diplproj.services.contracts.ThesisService;
 import com.example.diplproj.utils.Constants;
 import com.example.diplproj.utils.enums.Roles;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -111,6 +114,12 @@ public class StudentServiceImpl implements StudentService {
         return thesisDefenceStudents
                 .stream()
                 .map(ThesisDefenceStudent::getStudent).toList();
+    }
+
+
+    @Override
+    public StudentDto mapToStudentDto(Student student) {
+        return studentMapper.studentToDto(student);
     }
 
     @Override
