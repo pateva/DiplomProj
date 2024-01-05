@@ -22,6 +22,7 @@ import com.example.diplproj.services.contracts.ThesisDefenseTeacherService;
 import com.example.diplproj.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,6 +57,12 @@ public class ThesisDefenseServiceImpl implements ThesisDefenseService {
         }
 
         return thesisDefenseOpt.get();
+    }
+
+    @Override
+    public ThesisDefenseDto getThesisDefenseDto(Long id) {
+
+        return thesisDefenseMapper.toThesisDefenseDto(getThesisDefenseById(id));
     }
 
     @Override
@@ -109,7 +116,9 @@ public class ThesisDefenseServiceImpl implements ThesisDefenseService {
     }
 
     @Override
-    public Page<ThesisDefensePartialDto> getThesisDefenses() {
-        return null;
+    public Page<ThesisDefensePartialDto> getThesisDefenses(int page, int size) {
+        Page<ThesisDefense> thesisDefensePage = thesisDefenseRepository.findAll(PageRequest.of(page, size));
+
+        return thesisDefensePage.map(thesisDefenseMapper::toThesisDefensePartialDto);
     }
 }

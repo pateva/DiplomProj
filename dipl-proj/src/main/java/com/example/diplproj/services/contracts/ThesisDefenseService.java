@@ -15,7 +15,9 @@ public interface ThesisDefenseService {
 
     ThesisDefense getThesisDefenseById(Long id);
 
+    ThesisDefenseDto getThesisDefenseDto(Long id);
+
     ThesisDefenseDto addUsersToThesisDefense(Long id, ThesisDefenseUsersDto thesisDefenseUsersDto);
 
-    Page<ThesisDefensePartialDto> getThesisDefenses();
+    Page<ThesisDefensePartialDto> getThesisDefenses(int page, int size);
 }
