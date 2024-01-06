@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "diplProjUI": {
+    "DiplomProjUI": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/dipl-proj-ui",
+            "outputPath": "dist/diplom-proj-ui",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "diplProjUI:build:production"
+              "buildTarget": "DiplomProjUI:build:production"
             },
             "development": {
-              "buildTarget": "diplProjUI:build:development"
+              "buildTarget": "DiplomProjUI:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "diplProjUI:build"
+            "buildTarget": "DiplomProjUI:build"
           }
         },
         "test": {
@@ -104,6 +104,6 @@
     }
   },
   "cli": {
-    "analytics": "fae16a36-2f5b-4ce8-babd-887fa00b9b14"
+    "analytics": "083be91a-c4da-4b71-9752-a60babe55d5a"
   }
 }
