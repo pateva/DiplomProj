@@ -1,0 +1,24 @@
+.header-right {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .mat-toolbar {
+    margin-bottom: 5%;
+    padding: 0 2%;
+  }
+
+  .mat-toolbar-row {
+    display: flex;
+    justify-content: space-between;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+    .mdc-button__label {
+      color: white;
+    }
