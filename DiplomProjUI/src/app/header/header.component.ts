@@ -19,7 +19,6 @@ export class HeaderComponent {
    const url=self ? this.router.url :urlToNavigateTo;
    this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
      this.router.navigate([`/${url}`]).then(()=>{
-       console.log(`After navigation I am on:${this.router.url}`)
      })
    })
   }
