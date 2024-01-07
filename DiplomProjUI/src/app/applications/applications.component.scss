@@ -1,0 +1,16 @@
+.applications-listing {
+    height: 100%;
+    // border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem 0 1rem;
+}
+
+table {
+    box-sizing: border-box;
+    // border: 1px solid red;
+}
+
+h3 {
+    padding-left: 1rem;
+}

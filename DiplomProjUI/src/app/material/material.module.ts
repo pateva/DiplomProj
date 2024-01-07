@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
 
 
 
@@ -12,13 +14,16 @@ import {MatButtonModule} from '@angular/material/button';
     CommonModule,
     MatSlideToggleModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule
   ],
   exports: [
     MatSlideToggleModule,
     MatToolbarModule,
-    MatButtonModule
-
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule
 ]
 })
 export class MaterialModule { }
