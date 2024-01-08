@@ -39,7 +39,11 @@ public class Auth0ServiceImpl implements Auth0Service {
     }
 
     public void deleteUser(String email) {
-        managementAPI.users().delete(getAuth0UserId(email));
+        try {
+            managementAPI.users().delete(getAuth0UserId(email)).execute();
+        } catch (Auth0Exception e) {
+            throw new AuthException();
+        }
     }
 
     public void updateUserEmail(String emailOld, String emailNew) {
@@ -64,7 +68,7 @@ public class Auth0ServiceImpl implements Auth0Service {
 
     private void assignRoleToUser(String userId, List<String> roleIds) throws Auth0Exception {
         // Assign the default role to the user
-        managementAPI.users().addRoles(userId, roleIds);
+        managementAPI.users().addRoles(userId, roleIds).execute();
     }
 
     private String getAuth0UserId(String email) {
