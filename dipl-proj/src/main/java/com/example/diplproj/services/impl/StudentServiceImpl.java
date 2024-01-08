@@ -75,6 +75,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void updateStudent(Long id, StudentDto studentDto) {
         Student student = getStudentById(id);
+        student.setEmail(studentDto.getEmail().toLowerCase());
 
         student.setFirstName(studentDto.getFirstName())
                 .setLastName(studentDto.getLastName());

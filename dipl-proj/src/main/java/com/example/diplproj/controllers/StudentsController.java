@@ -59,10 +59,10 @@ public class StudentsController {
 
     @HasRoles(Roles.TEACHER)
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDto> updateStudent(@PathVariable final String id, @RequestBody final StudentDto studentDto) {
-        studentService.updateStudent(Long.parseLong(id), studentDto);
+    public ResponseEntity<StudentDto> updateStudent(@PathVariable final Long id, @RequestBody final StudentDto studentDto) {
+        studentService.updateStudent(id, studentDto);
 
-        return new ResponseEntity<>(studentService.getStudentDtoById(Long.parseLong(id)), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getStudentDtoById(id), HttpStatus.OK);
     }
 
     @HasRoles(Roles.TEACHER)

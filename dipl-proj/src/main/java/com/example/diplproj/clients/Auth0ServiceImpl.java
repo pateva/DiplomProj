@@ -44,16 +44,22 @@ public class Auth0ServiceImpl implements Auth0Service {
 
     public void updateUserEmail(String emailOld, String emailNew) {
         Request<List<User>> listRequest = managementAPI.users().listByEmail(emailOld, new FieldsFilter());
-        User user;
+        String id ;
 
         try {
-            user = listRequest.execute().getBody().get(0);
+            id = listRequest.execute().getBody().get(0).getId();
         } catch (Auth0Exception e) {
             throw new AuthException();
         }
 
+        User user = new User();
         user.setEmail(emailNew);
-        managementAPI.users().update(user.getId(), user);
+
+        try {
+            managementAPI.users().update(id, user).execute();
+        } catch (Auth0Exception e) {
+            throw new AuthException();
+        }
     }
 
     private void assignRoleToUser(String userId, List<String> roleIds) throws Auth0Exception {
