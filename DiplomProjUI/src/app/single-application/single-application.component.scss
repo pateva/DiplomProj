@@ -1,5 +1,27 @@
-.fsz{
-    height: 100%;
-    width: 100%;
-    // background-color: white;
+.overlay-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(101, 92, 92);
+    margin-top:4rem;
+
+
 }
+
+.overlay-content {
+    width: 40%;
+    height: 80%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // opacity: 0.4;
+
+  
+    }
