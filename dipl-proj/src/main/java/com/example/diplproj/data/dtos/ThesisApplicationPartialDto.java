@@ -28,9 +28,9 @@ public class ThesisApplicationPartialDto {
     @JsonProperty("department_name")
     private String departmentName;
     @JsonProperty("student")
-    private StudentDto student;
+    private StudentPartialDto student;
     @JsonProperty("teacher")
-    private TeacherDto teacher;
+    private TeacherPartialDto teacher;
     @JsonProperty("status")
     private ApplicationStatus status;
 }

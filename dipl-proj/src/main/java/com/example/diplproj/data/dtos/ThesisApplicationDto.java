@@ -24,6 +24,6 @@ public class ThesisApplicationDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String departmentName;
-    private StudentDto student;
-    private TeacherDto teacher;
+    private StudentPartialDto student;
+    private TeacherPartialDto teacher;
 }

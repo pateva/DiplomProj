@@ -63,5 +63,4 @@ public class TeachersController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //todo getByName list
 }
